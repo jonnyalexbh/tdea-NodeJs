@@ -1,4 +1,10 @@
-const student1 = require('./calculations');
+const { student, getAverage } = require('./calculations');
 
-console.log(student1.student);
-console.log("the student's average is " + student1.getAverage(student1.student.notes.math, student1.student.notes.english, student1.student.notes.programation));
+console.log("the student's name is " + student.name);
+console.log("the student's average is " + getAverage(student.notes.math, student.notes.english, student.notes.programation));
+
+
+let { name, age: ageAlies, notes: { math, english, programation } } = student;
+console.log("the student's name is " + name);
+console.log("the student's average is " + getAverage(math, english, programation));
+console.log("the student's name is " + ageAlies);
