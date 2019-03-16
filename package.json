@@ -18,5 +18,8 @@
   "homepage": "https://github.com/jonnyalexbh/tdea-NodeJs#readme",
   "devDependencies": {
     "nodemon": "^1.18.10"
+  },
+  "dependencies": {
+    "yargs": "^13.2.2"
   }
 }
