@@ -4,11 +4,11 @@ const fs = require('fs');
 const options = {
   course_id: {
     demand: true,
-    alias: 'c'
+    alias: 'i'
   },
   identification: {
     demand: true,
-    alias: 'i'
+    alias: 'x'
   },
   name: {
     demand: true,
@@ -24,7 +24,7 @@ let listCourses = () => {
   Object.keys(courses).forEach(key => {
     let value = courses[key]
     setTimeout(() => {
-      console.log(`${value.id} Curso de ${value.name} duración ${value.duration} costo ${value.value}`);
+      console.log(`El curso se llama ${value.id}-${value.name} tiene una duración ${value.duration} y un valor de ${value.value}`);
     }, 2000 * key);
   })
 }
@@ -34,10 +34,10 @@ let listCourses = () => {
  * 
  */
 let createFile = (course, argv) => {
-  testText = `El estudiante ${argv.name} con identificacion ${argv.i} quedo inscrito al curso ${course.id} - ${course.name} con una duracion de ${course.duration} y un costo ${course.value}`;
+  testText = `El estudiante ${argv.name} con cédula ${argv.identification} se ha matriculado en el curso ${course.id} - ${course.name} tiene una duración de ${course.duration} y un valor ${course.value}`;
   fs.writeFile('inscripcion-ok.txt', testText, (err) => {
     if (err) throw (err)
-    console.log('the file has been created');
+    console.log('se ha creado el archivo');
   })
 }
 
@@ -46,9 +46,11 @@ let createFile = (course, argv) => {
  * 
  */
 let existCourse = (course, argv) => {
-  if (course == undefined) console.log('El ID del curso ingresado no existe');
+  if (course == undefined) {
+    console.log('Ha ingresado un ID que no corresponde a ningún curso');
+    listCourses();
+  }
   else {
-    console.log(`${course.id} Curso de ${course.name} duración ${course.duration} costo ${course.value}`);
     createFile(course, argv)
   }
 }
@@ -62,7 +64,7 @@ const argv = require('yargs')
   .argv
 
 if (argv._[0] == 'inscripcion') {
-  let course = courses.find(course => course.id == argv.c)
+  let course = courses.find(course => course.id == argv.course_id)
   existCourse(course, argv)
 }
 else {
