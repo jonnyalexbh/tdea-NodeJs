@@ -1,0 +1,25 @@
+{
+  "name": "tdea-nodejs",
+  "version": "1.0.0",
+  "description": "delivery 1",
+  "main": "app.js",
+  "dependencies": {
+    "yargs": "^13.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonnyalexbh/tdea-NodeJs.git"
+  },
+  "author": "jonnyalexbh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonnyalexbh/tdea-NodeJs/issues"
+  },
+  "homepage": "https://github.com/jonnyalexbh/tdea-NodeJs#readme"
+}
