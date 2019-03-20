@@ -1,5 +1,8 @@
+const express = require('express');
+const app = express();
+
 const { courses } = require('./courses');
-const fs = require('fs');
+let textToPrint = ''
 
 const options = {
   course_id: {
@@ -30,15 +33,11 @@ let listCourses = () => {
 }
 
 /*
- * create file
+ * print in the browser
  * 
  */
-let createFile = (course, argv) => {
-  testText = `El estudiante ${argv.name} con cédula ${argv.identification} se ha matriculado en el curso ${course.id} - ${course.name} tiene una duración de ${course.duration} y un valor ${course.value}`;
-  fs.writeFile('inscripcion.txt', testText, (err) => {
-    if (err) throw (err)
-    console.log('se ha creado el archivo');
-  })
+let printBrowser = (course, argv) => {
+  textToPrint = `El estudiante ${argv.name} con cédula ${argv.identification} se ha matriculado en el curso ${course.id} - ${course.name} tiene una duración de ${course.duration} y un valor ${course.value}`
 }
 
 /*
@@ -51,7 +50,7 @@ let existCourse = (course, argv) => {
     listCourses();
   }
   else {
-    createFile(course, argv)
+    printBrowser(course, argv)
   }
 }
 
@@ -71,3 +70,11 @@ else {
   console.log('Educación Continua del Tecnológico de Antioquia');
   listCourses();
 }
+
+app.get('/', function (req, res) {
+  res.send(textToPrint)
+})
+
+const server = app.listen(8000, function () {
+  console.log(`listening http://localhost:${server.address().port}`);
+});
