@@ -1,25 +1,20 @@
-Tecnológico de Antioquia
+Entregables Tecnológico de Antioquia
 =================
-### Primera entrega:
+Este repositorio contiene todas las entregas para la `Introducción a Node.js mediante el desarrollo de un proyecto ágil`, separado por **branchs**
 
+## Branches
+
+* [Deliverable #1](https://github.com/jonnyalexbh/tdea-NodeJs/tree/delivery%231)
+* [Bonus Deliverable #1](https://github.com/jonnyalexbh/tdea-NodeJs/tree/bonus-delivery%231)
+
+### Clonar proyecto:
 ``` bash
-# archivos
-delivery1.js
-delivery1-courses.js
-package.json
-readme.md
+git clone https://github.com/jonnyalexbh/tdea-NodeJs.git
+git ckeckout <branch>
 ```
+
 ### Instalar las dependencias del proyecto:
 ``` bash
 cd tdea-NodeJs/
 npm install
-```
-
-### Ejecutar proyecto:
-``` bash
-# listar cursos
-node delivery1.js
-# inscribirme en un curso
-node delivery1.js inscripcion
-node delivery1.js inscripcion -i=2 -x=123 -n=Jonnyalex
 ```
