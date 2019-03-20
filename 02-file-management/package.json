@@ -1,0 +1,14 @@
+{
+  "name": "02-file-management",
+  "version": "1.0.0",
+  "description": "file management",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jonnyalexbh",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "^13.2.2"
+  }
+}
