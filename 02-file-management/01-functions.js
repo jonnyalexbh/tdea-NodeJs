@@ -44,6 +44,21 @@ const saveStudents = () => {
   })
 }
 
+const show = () => {
+  toList()
+  console.log('Notas de los estudiantes')
+
+  studentList.forEach(student => {
+    console.log(student.name);
+    console.log('notas');
+    console.log('matematicas ' + student.math);
+    console.log('ingles ' + student.english);
+    console.log('programacion ' + student.programation + '\n');
+  });
+
+}
+
 module.exports = {
-  create
+  create,
+  show
 }
