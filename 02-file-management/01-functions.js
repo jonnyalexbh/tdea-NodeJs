@@ -10,9 +10,18 @@ const create = (student) => {
     english: student.english,
     programation: student.programation
   }
-  studentList.push(stud)
-  console.log(studentList);
-  saveStudents()
+
+  let duplicate = studentList.find(nam => nam.name == student.name)
+
+  if (!duplicate) {
+    studentList.push(stud)
+    console.log(studentList);
+    saveStudents()
+  }
+  else {
+    console.log('Ya existe otro estudiante con ese nombre');
+  }
+
 }
 
 const toList = () => {
