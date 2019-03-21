@@ -20,6 +20,14 @@ switch (command) {
     functions.showMath();
     break
 
+  case 'showAverage':
+    functions.showAverage(argv.name);
+    break
+
+  case 'studentsAverage':
+    functions.studentsAverage();
+    break
+
   default:
     console.log('no ingresaste un comando existente');
 }

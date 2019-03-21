@@ -90,9 +90,42 @@ const showMath = () => {
   }
 }
 
+/*
+ * average of a student
+ * 
+ */
+const showAverage = (nam) => {
+  toList()
+  let stu = studentList.find(searchStu => searchStu.name == nam)
+
+  if (!stu) {
+    console.log('No existe el estudiante');
+  }
+  else {
+    console.log('el promedio del estudiante ' + stu.name + ' ' + (stu.math + stu.english + stu.programation) / 3);
+  }
+}
+
+/*
+ * students with average greater than 3
+ * 
+ */
+const studentsAverage = () => {
+  toList()
+  let average = studentList.filter(aver => (aver.math + aver.english + aver.programation) / 3 >= 3)
+
+  average.forEach(student => {
+    console.log('promedio mayor a 3');
+    console.log(student.name + '\n');
+  });
+
+}
+
 module.exports = {
   create,
   show,
   showStudent,
-  showMath
+  showMath,
+  showAverage,
+  studentsAverage
 }
