@@ -16,6 +16,10 @@ switch (command) {
     functions.showStudent(argv.name);
     break
 
+  case 'showMath':
+    functions.showMath();
+    break
+
   default:
     console.log('no ingresaste un comando existente');
 }

@@ -74,8 +74,25 @@ const showStudent = (nam) => {
   }
 }
 
+const showMath = () => {
+  toList()
+  let win = studentList.filter(mat => mat.math >= 3)
+
+  if (win.length == 0) {
+    console.log('ningun estudiante va ganando');
+  }
+  else {
+    win.forEach(student => {
+      console.log(student.name);
+      console.log('notas');
+      console.log('matematicas ' + student.math + '\n');
+    });
+  }
+}
+
 module.exports = {
   create,
   show,
-  showStudent
+  showStudent,
+  showMath
 }
