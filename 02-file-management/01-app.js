@@ -28,6 +28,10 @@ switch (command) {
     functions.studentsAverage();
     break
 
+  case 'update':
+    functions.update(argv.name, argv.subjectMatter, argv.note);
+    break
+
   default:
     console.log('no ingresaste un comando existente');
 }

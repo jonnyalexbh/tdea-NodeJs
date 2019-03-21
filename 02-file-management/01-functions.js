@@ -121,11 +121,29 @@ const studentsAverage = () => {
 
 }
 
+/*
+ * update
+ * 
+ */
+const update = (nam, subjtMat, not) => {
+  toList()
+  let found = studentList.find(searchStu => searchStu.name == nam)
+
+  if (!found) {
+    console.log('Estudiante no existe');
+  }
+  else {
+    found[subjtMat] = not
+    saveStudents()
+  }
+}
+
 module.exports = {
   create,
   show,
   showStudent,
   showMath,
   showAverage,
-  studentsAverage
+  studentsAverage,
+  update
 }
