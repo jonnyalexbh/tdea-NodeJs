@@ -3,6 +3,7 @@ const fs = require('fs');
 studentList = []
 
 const create = (student) => {
+  toList()
   let stud = {
     name: student.name,
     math: student.math,
@@ -12,6 +13,18 @@ const create = (student) => {
   studentList.push(stud)
   console.log(studentList);
   saveStudents()
+}
+
+const toList = () => {
+  try {
+    studentList = require('./list.json')
+  }
+  catch (error) {
+    studentList = []
+  }
+
+  // en caso de que se vaya a trabajar de manera asincrónica utilizar esta segunda
+  // studentList = JSON.parse(fs.readFileSync('list.json'))
 }
 
 const saveStudents = () => {
