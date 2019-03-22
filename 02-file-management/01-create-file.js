@@ -45,6 +45,10 @@ const update = {
   }
 }
 
+const destroy = {
+  name
+}
+
 const argv = require('yargs')
   .command('create', 'crear un estudiante en mi BD', creation)
   .command('show', 'muestra los estudiantes y sus notas')
@@ -52,6 +56,7 @@ const argv = require('yargs')
   .command('showAverage', 'mostrar promedio del estudiante', showAverage)
   .command('studentsAverage', 'mostrar estudiantes con promedio mayor a 3')
   .command('update', 'actualiza la informacion de un curso', update)
+  .command('destroy', 'elimina un estudiante de la BD', destroy)
   .argv
 
 module.exports = {

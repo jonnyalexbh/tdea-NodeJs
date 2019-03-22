@@ -32,6 +32,10 @@ switch (command) {
     functions.update(argv.name, argv.subjectMatter, argv.note);
     break
 
+  case 'destroy':
+    functions.destroy(argv.name);
+    break
+
   default:
     console.log('no ingresaste un comando existente');
 }

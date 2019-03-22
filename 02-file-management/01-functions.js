@@ -138,6 +138,23 @@ const update = (nam, subjtMat, not) => {
   }
 }
 
+/*
+ * destroy
+ * 
+ */
+const destroy = (nam) => {
+  toList()
+  let newData = studentList.filter(searchStu => searchStu.name != nam)
+
+  if (newData.length == studentList.length) {
+    console.log('ningun estudiante tiene el nombre');
+  }
+  else {
+    studentList = newData
+    saveStudents()
+  }
+}
+
 module.exports = {
   create,
   show,
@@ -145,5 +162,6 @@ module.exports = {
   showMath,
   showAverage,
   studentsAverage,
-  update
+  update,
+  destroy
 }
