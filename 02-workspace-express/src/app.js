@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const hbs = require('hbs');
+require('./helpers');
 
 // static files
 const publicDirectory = path.join(__dirname, "../public");
@@ -20,7 +21,10 @@ app.get('/', (req, res) => {
 
 app.get('/calculations', (req, res) => {
   res.render('calculations', {
-    student: 'Tankis Alexis'
+    student: 'Tankis Alexis',
+    note1: 4,
+    note2: 5,
+    note3: 3
   });
 });
 
