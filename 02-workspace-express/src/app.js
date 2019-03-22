@@ -21,10 +21,10 @@ app.get('/', (req, res) => {
 
 app.get('/calculations', (req, res) => {
   res.render('calculations', {
-    student: 'Tankis Alexis',
-    note1: 4,
-    note2: 5,
-    note3: 3
+    student: req.query.name,
+    note1: parseInt(req.query.note1),
+    note2: parseInt(req.query.note2),
+    note3: parseInt(req.query.note3)
   });
 });
 
