@@ -1,5 +1,12 @@
 {{>header}}
-<p>
-  Bienvenido a la página inicio
-</p>
+<p>Bienvenido a la página inicio</p>
+
+<form action="/calculations" method="post">
+  <input type="text" name="name">
+  <input type="number" name="note1">
+  <input type="number" name="note2">
+  <input type="number" name="note3">
+  <button>Calcular</button>
+</form>
+
 {{>footer}}
