@@ -6,9 +6,11 @@ const hbs = require('hbs');
 
 // static files
 const publicDirectory = path.join(__dirname, "../public");
-const dirNode_modules = path.join(__dirname , '../node_modules')
+const dirNode_modules = path.join(__dirname, '../node_modules')
+const partialsDirectory = path.join(__dirname, "../partials");
 
 app.use(express.static(publicDirectory));
+hbs.registerPartials(partialsDirectory);
 
 // install boostrap
 app.use('/css', express.static(dirNode_modules + '/bootstrap/dist/css'));
