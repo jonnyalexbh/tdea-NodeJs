@@ -1,0 +1,39 @@
+{{>header}}
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-start">
+    <h4>Detalles curso {{course.name}}</h4>
+  </div>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td class="text-success">ID</td>
+        <td>{{course.id}}</td>
+      </tr>
+      <tr>
+        <td class="text-success">Nombre</td>
+        <td>{{course.name}}</td>
+      </tr>
+      <tr>
+        <td class="text-success">Modalidad</td>
+        <td>{{course.modality}}</td>
+      </tr>
+      <tr>
+        <td class="text-success">Intensidad Horaria</td>
+        <td>{{course.workload}}</td>
+      </tr>
+      <tr>
+        <td class="text-success">Estado</td>
+        <td>{{course.state}}</td>
+      </tr>
+      <tr>
+        <td class="text-success">Descripción</td>
+        <td>{{course.description}}</td>
+      </tr>
+      <tr>
+        <td class="text-success">Costo</td>
+        <td>{{course.cost}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{{>footer}}

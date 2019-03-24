@@ -1,19 +1,16 @@
 {{>header}}
 <div class="container-fluid">
-  <div class="pb-4 d-flex justify-content-between">
-    <h4>Cursos</h4>
-    <a href="/add-course" class="btn btn-dark" role="button">Agregar curso</a>
+  <div class="pb-4 d-flex justify-content-start">
+    <h4>Cursos disponibles</h4>
   </div>
   <table class="table table-sm">
     <thead>
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Nombre</th>
-        <th scope="col">Modalidad</th>
-        <th scope="col">Intensidad Horaria</th>
-        <th scope="col">Estado</th>
         <th scope="col">Descripción</th>
         <th scope="col">Valor</th>
+        <th colspan="2" scope="col">Acciones</th>
       </tr>
     </thead>
     {{#each courses}}
@@ -21,11 +18,10 @@
       <tr>
         <th scope="row">{{this.id}}</th>
         <td>{{this.name}}</td>
-        <td>{{this.modality}}</td>
-        <td>{{this.workload}}</td>
-        <td>{{this.state}}</td>
         <td>{{this.description}}</td>
         <td>{{this.cost}}</td>
+        <td><a class="btn btn-link btn-sm" href="/show-course/{{this.id}}" role="button">Mostrar</a></td>
+        <td><a class="btn btn-link btn-sm" href="#" role="button">Inscribirme</a></td>
       </tr>
     </tbody>
     {{/each}}

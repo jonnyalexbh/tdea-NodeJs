@@ -23,14 +23,21 @@ exports.index = function (req, res) {
 };
 
 /**
+* show course
+*
+*/
+exports.show = function (req, res) {
+  coursesList = all()
+  let show = coursesList.find(search => search.id == req.params.id)
+  res.render('show-course', { course: show });
+};
+
+/**
 * store a course
 *
 */
 exports.store = function (req, res) {
   coursesList = all()
-
-  console.log(req.body.state);
-  
 
   let course = {
     id: req.body.id,
@@ -57,4 +64,14 @@ exports.store = function (req, res) {
     console.log('Ya existe otro curso con este id');
     res.redirect('/courses');
   }
+};
+
+/**
+* show only available courses
+*
+*/
+exports.coursesAvailable = function (req, res) {
+  coursesList = all()
+  let onlyAvailable = coursesList.filter(available => available.state == 'Disponible')
+  res.render('courses-available', { courses: onlyAvailable });
 };
