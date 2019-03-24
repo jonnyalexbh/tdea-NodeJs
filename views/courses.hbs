@@ -1,0 +1,33 @@
+{{>header}}
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-end">
+    <a href="/add-course" class="btn btn-dark" role="button">Agregar curso</a>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Modalidad</th>
+        <th scope="col">Intensidad Horaria</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Valor</th>
+      </tr>
+    </thead>
+    {{#each courses}}
+    <tbody>
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.name}}</td>
+        <td>{{this.modality}}</td>
+        <td>{{this.workload}}</td>
+        <td>{{this.state}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.cost}}</td>
+      </tr>
+    </tbody>
+    {{/each}}
+  </table>
+</div>
+{{>footer}}
