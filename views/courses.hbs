@@ -14,6 +14,7 @@
         <th scope="col">Estado</th>
         <th scope="col">Descripción</th>
         <th scope="col">Valor</th>
+        <th colspan="2" scope="col">Acciones</th>
       </tr>
     </thead>
     {{#each courses}}
@@ -26,6 +27,8 @@
         <td>{{this.state}}</td>
         <td>{{this.description}}</td>
         <td>{{this.cost}}</td>
+        <td><a class="btn btn-link btn-sm" href="#" role="button">Actualizar</a></td>
+        <td><a class="btn btn-link btn-sm" href="#" role="button">Ver inscritos</a></td>
       </tr>
     </tbody>
     {{/each}}
