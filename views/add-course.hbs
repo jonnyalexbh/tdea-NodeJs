@@ -1,7 +1,7 @@
 {{>header}}
 <div class="container-fluid">
   <div class="pb-4 d-flex justify-content-start">
-    <h4>Agregar curso</h4>
+    <h4>Ingresar un nuevo curso</h4>
   </div>
   <form action="/store-course" method="post">
     <div class="form-row">
@@ -10,30 +10,32 @@
         <input type="number" name="id" required class="form-control" placeholder="ID">
       </div>
       <div class="form-group col-md-6">
-        <label for="nombre">Nombre</label>
+        <label for="name">Nombre</label>
         <input type="text" name="name" required class="form-control" placeholder="Nombre">
       </div>
     </div>
-    <div class="form-group">
-      <label for="inputAddress">Modalidad</label>
-      <select name="modality" class="form-control">
-        <option selected>Choose...</option>
-        <option>Virtual</option>
-        <option>Presencial</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="intensidad horaria">Intensidad horaria</label>
-      <input type="text" name="workload" class="form-control" placeholder="Intensidad horaria">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="modality">Modalidad</label>
+        <select name="modality" class="form-control">
+          <option selected>Seleccione...</option>
+          <option>Presencial</option>
+          <option>Virtual</option>
+        </select>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="cost">Valor</label>
+        <input type="number" name="cost" required class="form-control">
+      </div>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">
-        <label for="inputCity">Descripción</label>
-        <input type="text" name="description" required class="form-control">
+        <label for="description">Descripción</label>
+        <textarea name="description" required class="form-control" rows="4"></textarea>
       </div>
-      <div class="form-group col-md-2">
-        <label for="valor">Valor</label>
-        <input type="text" name="cost" required class="form-control">
+      <div class="form-group col-md-6">
+        <label for="valor">Intensidad horaria</label>
+        <input type="number" name="workload" class="form-control" placeholder="Intensidad horaria">
       </div>
     </div>
     <div class="pb-4 d-flex justify-content-center">

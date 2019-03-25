@@ -1,19 +1,19 @@
 {{>header}}
 <div class="container-fluid">
   <div class="pb-4 d-flex justify-content-between">
-    <h4>Cursos</h4>
-    <a href="/add-course" class="btn btn-dark" role="button">Agregar curso</a>
+    <h4>Ver cursos como administrador</h4>
+    <a href="/add-course" class="btn btn-dark" role="button">Crear curso</a>
   </div>
   <table class="table table-sm">
-    <thead>
+    <thead class="thead-dark">
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Valor</th>
         <th scope="col">Modalidad</th>
         <th scope="col">Intensidad Horaria</th>
         <th scope="col">Estado</th>
-        <th scope="col">Descripción</th>
-        <th scope="col">Valor</th>
         <th colspan="2" scope="col">Acciones</th>
       </tr>
     </thead>
@@ -22,11 +22,11 @@
       <tr>
         <th scope="row">{{this.id}}</th>
         <td>{{this.name}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.cost}}</td>
         <td>{{this.modality}}</td>
         <td>{{this.workload}}</td>
         <td>{{this.state}}</td>
-        <td>{{this.description}}</td>
-        <td>{{this.cost}}</td>
         <td><a class="btn btn-link btn-sm" href="#" role="button">Actualizar</a></td>
         <td><a class="btn btn-link btn-sm" href="/see-registered/{{this.id}}" role="button">Ver inscritos</a></td>
       </tr>

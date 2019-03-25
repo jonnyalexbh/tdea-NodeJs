@@ -99,7 +99,7 @@ exports.store = function (req, res) {
     modality: req.body.modality,
     workload: req.body.workload,
     description: req.body.description,
-    state: 'Disponible',
+    state: 'disponible',
     cost: req.body.cost
   }
 
@@ -181,7 +181,7 @@ exports.registryCourse = function (req, res) {
 */
 exports.coursesAvailable = function (req, res) {
   allCourses()
-  let onlyAvailable = coursesList.filter(available => available.state == 'Disponible')
+  let onlyAvailable = coursesList.filter(available => available.state == 'disponible')
   res.render('courses-available', { courses: onlyAvailable });
 }
 
