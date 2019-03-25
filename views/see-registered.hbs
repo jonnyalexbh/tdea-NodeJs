@@ -1,0 +1,27 @@
+{{>header}}
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-start">
+    <h4>Inscritos al curso {{course.name}}</h4>
+  </div>
+  <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col">Identificación</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Correo Electronico</th>
+        <th scope="col">Telefono</th>
+      </tr>
+    </thead>
+    {{#each people}}
+    <tbody>
+      <tr>
+        <td>{{this.identity}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.email}}</td>
+        <td>{{this.phone}}</td>
+      </tr>
+    </tbody>
+    {{/each}}
+  </table>
+</div>
+{{>footer}}

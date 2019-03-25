@@ -72,6 +72,7 @@ const saveCoursesPerPerson = () => {
 *
 */
 exports.index = function (req, res) {
+  allCourses()
   res.render('courses', { courses: coursesList });
 }
 
@@ -182,4 +183,26 @@ exports.coursesAvailable = function (req, res) {
   allCourses()
   let onlyAvailable = coursesList.filter(available => available.state == 'Disponible')
   res.render('courses-available', { courses: onlyAvailable });
+}
+
+/**
+* seeRegistered
+*
+*/
+exports.seeRegistered = function (req, res) {
+  allCourses()
+  people()
+  coursesPerPerson()
+
+  registeredCourse = [];
+
+  let show = coursesList.find(search => search.id == req.params.id)
+  let insideCourse = coursePerson.filter(search => search.course_id == req.params.id)
+
+  insideCourse.forEach(person => {
+    let formar = registeredPeople.find(search => search.identity == person.user_id)
+    registeredCourse.push(formar);
+  });
+
+  res.render('see-registered', { course: show, people: registeredCourse });
 }
