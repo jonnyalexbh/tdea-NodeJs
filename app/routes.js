@@ -9,6 +9,7 @@ router.get('/enter-course/:id', course_controller.enterCourse);
 router.post('/registry-course', course_controller.registryCourse);
 router.get('/courses-available', course_controller.coursesAvailable);
 router.get('/see-registered/:id', course_controller.seeRegistered);
+router.get('/update-course-status/:id', course_controller.updateCourseStatus);
 
 router.get('/', (req, res) => {
   res.render('index');

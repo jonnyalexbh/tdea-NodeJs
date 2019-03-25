@@ -44,6 +44,18 @@ const coursesPerPerson = () => {
 }
 
 /**
+* saveCourse
+*
+*/
+const saveCourse = () => {
+  let data = JSON.stringify(coursesList)
+  fs.writeFile('courses.json', data, (err) => {
+    if (err) throw (err)
+    console.log('Curso guardado correctamente')
+  })
+}
+
+/**
 * savePerson
 *
 */
@@ -107,12 +119,8 @@ exports.store = function (req, res) {
 
   if (!duplicate) {
     coursesList.push(course)
-    let data = JSON.stringify(coursesList)
-
-    fs.writeFile('courses.json', data, (err) => {
-      if (err) throw (err)
-      res.redirect('/courses');
-    })
+    saveCourse()
+    res.redirect('/courses');
   }
   else {
     console.log('Ya existe otro curso con este id');
@@ -153,14 +161,13 @@ exports.registryCourse = function (req, res) {
   let checkExistPerson = registeredPeople.find(search => search.identity == registryUser.identity)
   let checkDuplicate = coursePerson.filter(search => search.user_id == registryUser.identity && search.course_id == coursesPerson.course_id)
 
-  registeredPeople.push(registryUser)
-  coursePerson.push(coursesPerson)
-
   if (checkDuplicate.length >= 1 || checkDuplicate.length >= 1 && checkExistPerson) {
     console.log('ya estas inscrito en este curso');
     res.redirect('/courses-available');
   }
   else if (checkDuplicate.length == 0 && !checkExistPerson) {
+    registeredPeople.push(registryUser)
+    coursePerson.push(coursesPerson)
     savePerson()
     saveCoursesPerPerson()
     res.redirect('/courses-available');
@@ -205,4 +212,17 @@ exports.seeRegistered = function (req, res) {
   });
 
   res.render('see-registered', { course: show, people: registeredCourse });
+}
+
+/**
+* update course status
+*
+*/
+exports.updateCourseStatus = function (req, res) {
+  allCourses()
+
+  let found = coursesList.find(search => search.id == req.params.id)
+  found['state'] = 'cerrado'
+  saveCourse()
+  res.redirect('/courses');
 }
