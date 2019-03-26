@@ -175,6 +175,7 @@ exports.registryCourse = function (req, res) {
   else if (checkDuplicate.length == 0 && checkExistPerson) {
     let newData = registeredPeople.filter(search => search.identity != registryUser.identity)
     newData.push(registryUser)
+    coursePerson.push(coursesPerson)
     registeredPeople = newData
     savePerson()
     saveCoursesPerPerson()
@@ -207,8 +208,9 @@ exports.seeRegistered = function (req, res) {
   let insideCourse = coursePerson.filter(search => search.course_id == req.params.id)
 
   insideCourse.forEach(person => {
-    let formar = registeredPeople.find(search => search.identity == person.user_id)
-    registeredCourse.push(formar);
+    let createPerson = registeredPeople.find(search => search.identity == person.user_id)
+    createPerson.course_id = req.params.id;
+    registeredCourse.push(createPerson);
   });
 
   res.render('see-registered', { course: show, people: registeredCourse });
@@ -224,5 +226,19 @@ exports.updateCourseStatus = function (req, res) {
   let found = coursesList.find(search => search.id == req.params.id)
   found['state'] = 'cerrado'
   saveCourse()
+  res.redirect('/courses');
+}
+
+/**
+* remove from course
+*
+*/
+exports.removeFromCourse = function (req, res) {
+  coursesPerPerson()
+
+  let newData = coursePerson.filter(search => !(search.course_id == req.params.course_id && search.user_id == req.params.student_id))
+  coursePerson = newData
+
+  saveCoursesPerPerson()
   res.redirect('/courses');
 }

@@ -15,5 +15,5 @@ npm install
 
 ### Ejecutar proyecto:
 ``` bash
-nodemon -e js,hbs
+nodemon -e js,hbs,json
 ```

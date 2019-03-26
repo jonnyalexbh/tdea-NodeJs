@@ -10,6 +10,7 @@
         <th scope="col">Nombre</th>
         <th scope="col">Correo electrónico</th>
         <th scope="col">Telefono</th>
+        <th scope="col">Acciones</th>
       </tr>
     </thead>
     {{#each people}}
@@ -19,6 +20,10 @@
         <td>{{this.name}}</td>
         <td>{{this.email}}</td>
         <td>{{this.phone}}</td>
+        <td>
+          <a class="btn btn-link btn-sm" href="/remove-from-course/{{this.course_id}}/{{this.identity}}"
+            role="button">Eliminar del curso</a>
+        </td>
       </tr>
     </tbody>
     {{/each}}

@@ -10,6 +10,7 @@ router.post('/registry-course', course_controller.registryCourse);
 router.get('/courses-available', course_controller.coursesAvailable);
 router.get('/see-registered/:id', course_controller.seeRegistered);
 router.get('/update-course-status/:id', course_controller.updateCourseStatus);
+router.get('/remove-from-course/:course_id/:student_id', course_controller.removeFromCourse);
 
 router.get('/', (req, res) => {
   res.render('index');
