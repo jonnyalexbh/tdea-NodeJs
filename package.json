@@ -4,6 +4,7 @@
   "description": "second delivery tdea",
   "main": "src/app.js",
   "scripts": {
+    "start:dev": "nodemon -e js,hbs,json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,5 +24,8 @@
     "hbs": "^4.0.3",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.7"
+  },
+  "devDependencies": {
+    "nodemon": "1.18.10"
   }
 }
