@@ -22,6 +22,6 @@ exports.authenticated = (req, res) => {
   if (check) {
     res.redirect('/main');
   } else {
-    res.redirect('/');
+    res.render('index', { message: 'Estas credenciales no coinciden con nuestros registros.' });
   }
 };

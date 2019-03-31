@@ -31,7 +31,7 @@ exports.store = (req, res) => {
   };
 
   if (functions.checkExistsUser(registerUser.identity)) {
-    res.redirect('/register');
+    res.render('register', { message: 'La informacion ingresada ya existe en nuestra base de datos' });
   } else {
     registeredUsers.push(registerUser);
     functions.storeUsers(registeredUsers);

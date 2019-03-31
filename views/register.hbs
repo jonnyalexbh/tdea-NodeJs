@@ -4,6 +4,11 @@
     <div class="wrap-register">
       <h3 class="title">Registro</h3>
       <hr class="divisor">
+      <div class="pb-2 text-center text-danger d-flex justify-content-center message">
+        {{#if message}}
+        {{{message}}}
+        {{/if}}
+      </div>
       <form action="/register-store" method="post">
         <div class="form-group">
           <label for="identity">Documento de identidad</label>
