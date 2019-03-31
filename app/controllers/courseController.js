@@ -1,4 +1,5 @@
 const fs = require('fs');
+const functions = require('../functions');
 
 let coursesList = [];
 let registeredPeople = [];
@@ -88,7 +89,7 @@ const saveCoursesPerPerson = () => {
 */
 exports.index = function (req, res) {
   allCourses();
-  res.render('courses', { courses: coursesList });
+  res.render('courses', { courses: coursesList, checkAdmin: functions.isAdmin(req) });
 };
 
 /**
@@ -221,7 +222,7 @@ exports.seeRegistered = function (req, res) {
     registeredCourse.push(createPerson);
   });
 
-  res.render('see-registered', { course: show, people: registeredCourse });
+  res.render('see-registered', { course: show, people: registeredCourse, checkAdmin: functions.isAdmin(req) });
 };
 
 /**

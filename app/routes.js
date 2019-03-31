@@ -7,6 +7,7 @@ const registerController = require('./controllers/registerController');
 
 router.get('/', loginController.index);
 router.post('/login', loginController.authenticated);
+router.get('/main', loginController.main);
 router.get('/register', registerController.create);
 router.post('/register-store', registerController.store);
 
@@ -19,10 +20,6 @@ router.get('/courses-available', courseController.coursesAvailable);
 router.get('/see-registered/:id', courseController.seeRegistered);
 router.get('/update-course-status/:id', courseController.updateCourseStatus);
 router.get('/remove-from-course/:course_id/:student_id', courseController.removeFromCourse);
-
-router.get('/main', (req, res) => {
-  res.render('main');
-});
 
 router.get('/add-course', (req, res) => {
   res.render('add-course');

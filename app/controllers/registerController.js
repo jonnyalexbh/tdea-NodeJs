@@ -27,7 +27,7 @@ exports.store = (req, res) => {
     email,
     phone,
     password: identity,
-    rol: 'aspirante',
+    role: 'aspirante',
   };
 
   if (functions.checkExistsUser(registerUser.identity)) {

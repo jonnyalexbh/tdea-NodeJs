@@ -1,1 +1,19 @@
-[{"identity":"999","name":"Jonny Alexander","email":"jonny@gmail.com","phone":"3094911","course_id":"90"},{"identity":"888","name":"Tankis","email":"tankis@gmail.com","phone":"2222222"},{"identity":"333","name":"Luisa","email":"luisa@gmail.com","phone":"3333333","password":"333","rol":"aspirante"}]
+[
+  {
+    "identity": "999",
+    "name": "Jonny Alexander",
+    "email": "jonny@gmail.com",
+    "phone": "3094911",
+    "course_id": "90",
+    "role": "admin",
+    "password": "999"
+  },
+  {
+    "identity": "888",
+    "name": "Tankis",
+    "email": "tankis@gmail.com",
+    "phone": "2222222",
+    "role": "aspirante",
+    "password": "888"
+  }
+]

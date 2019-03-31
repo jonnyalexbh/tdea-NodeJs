@@ -35,8 +35,32 @@ const checkExistsUser = (identity) => {
   return registeredUsers.find(search => search.identity === identity);
 };
 
+/**
+* checkLogged
+*
+*/
+const checkLogged = (req, res) => {
+  if (req.session.loggedIn !== 1) {
+    res.redirect('/');
+  }
+  return '';
+};
+
+/**
+* isAdmin
+*
+*/
+const isAdmin = (req) => {
+  if (req.session.userRole === 'admin') {
+    return 1;
+  }
+  return 0;
+};
+
 module.exports = {
   loadUsers,
   storeUsers,
   checkExistsUser,
+  checkLogged,
+  isAdmin,
 };
