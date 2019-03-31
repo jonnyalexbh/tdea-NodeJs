@@ -2,6 +2,13 @@ const express = require('express');
 
 const router = express.Router();
 const courseController = require('./controllers/courseController');
+const loginController = require('./controllers/loginController');
+const registerController = require('./controllers/registerController');
+
+router.get('/', loginController.index);
+router.post('/login', loginController.authenticated);
+router.get('/register', registerController.create);
+router.post('/register-store', registerController.store);
 
 router.get('/courses', courseController.index);
 router.get('/show-course/:id', courseController.show);
@@ -13,16 +20,8 @@ router.get('/see-registered/:id', courseController.seeRegistered);
 router.get('/update-course-status/:id', courseController.updateCourseStatus);
 router.get('/remove-from-course/:course_id/:student_id', courseController.removeFromCourse);
 
-router.get('/', (req, res) => {
-  res.render('index');
-});
-
 router.get('/main', (req, res) => {
   res.render('main');
-});
-
-router.get('/register', (req, res) => {
-  res.render('register');
 });
 
 router.get('/add-course', (req, res) => {
