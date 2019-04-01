@@ -258,3 +258,22 @@ exports.removeFromCourse = (req, res) => {
   saveCoursesPerPerson();
   res.render('courses', { courses: coursesList, req });
 };
+
+/**
+* my courses
+*
+*/
+exports.myCourses = (req, res) => {
+  allCourses();
+  coursesPerPerson();
+  const insideCourse = coursePerson.filter(search => search.user_id == req.session.userId);
+
+  courses = [];
+
+  insideCourse.forEach(item => {
+    const course = coursesList.find(search => search.id == item.course_id);
+    courses.push(course);
+  });
+
+  res.render('my-courses', { courses: courses, req });
+};

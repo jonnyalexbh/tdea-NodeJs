@@ -1,1 +1,6 @@
-[{"user_id":"999","course_id":"90"}]
+[
+  {
+    "user_id": "888",
+    "course_id": "90"
+  }
+]

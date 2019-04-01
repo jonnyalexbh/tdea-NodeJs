@@ -1,0 +1,36 @@
+{{>header}}
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-between">
+    <h4>Gestionar cursos</h4>
+    <a href="/add-course" class="btn btn-dark" role="button">Crear curso</a>
+  </div>
+  <table class="table table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Modalidad</th>
+        <th scope="col">Intensidad Horaria</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    {{#each courses}}
+    <tbody>
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.name}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.cost}}</td>
+        <td>{{this.modality}}</td>
+        <td>{{this.workload}}</td>
+        <td>{{this.state}}</td>
+        <td><a class="btn btn-link btn-sm" href="#" role="button">Eliminar</a></td>
+      </tr>
+    </tbody>
+    {{/each}}
+  </table>
+</div>
+{{>footer}}
