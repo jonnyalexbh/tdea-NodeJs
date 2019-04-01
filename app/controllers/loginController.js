@@ -35,5 +35,15 @@ exports.authenticated = (req, res) => {
 *
 */
 exports.main = (req, res) => {
+  functions.isLogged(req, res);
   res.render('main', { req });
+};
+
+/**
+* logout
+*
+*/
+exports.logout = (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
 };

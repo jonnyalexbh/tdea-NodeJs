@@ -6,6 +6,7 @@ const loginController = require('./controllers/loginController');
 const registerController = require('./controllers/registerController');
 
 router.get('/', loginController.index);
+router.get('/logout', loginController.logout);
 router.post('/login', loginController.authenticated);
 router.get('/main', loginController.main);
 router.get('/register', registerController.create);

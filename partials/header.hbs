@@ -30,14 +30,12 @@
           <a class="nav-item nav-link active" href="/main">Home</a>
           {{#if (isAdmin req) }}
           <a class="nav-item nav-link" href="/courses">Cursos</a>
-          <a class="nav-item nav-link" href="/">Cerrar sesión</a>
-          <a class="nav-item nav-link disabled" href="/">Proximamente</a>
           {{else}}
           <a class="nav-item nav-link" href="/courses-available">Cursos disponibles</a>
           <a class="nav-item nav-link" href="/my-courses">Mis cursos</a>
-          <a class="nav-item nav-link" href="/">Cerrar sesión</a>
-          <a class="nav-item nav-link disabled" href="/">Proximamente</a>
           {{/if}}
+          <a class="nav-item nav-link" href="/logout">Cerrar sesión</a>
+          <a class="nav-item nav-link disabled" href="/">Proximamente</a>
         </div>
       </div>
     </nav>

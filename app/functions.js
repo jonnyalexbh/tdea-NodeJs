@@ -47,9 +47,21 @@ const isAdmin = (req) => {
   return 0;
 };
 
+/**
+* isLogged
+*
+*/
+const isLogged = (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/');
+  }
+  return 0;
+};
+
 module.exports = {
   loadUsers,
   storeUsers,
   checkExistsUser,
   isAdmin,
+  isLogged,
 };

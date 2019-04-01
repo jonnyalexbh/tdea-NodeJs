@@ -1,4 +1,5 @@
 const fs = require('fs');
+const functions = require('../functions');
 
 let coursesList = [];
 let registeredPeople = [];
@@ -86,7 +87,8 @@ const saveCoursesPerPerson = () => {
 * show all courses
 *
 */
-exports.index = function (req, res) {
+exports.index = (req, res) => {
+  functions.isLogged(req, res);
   allCourses();
   res.render('courses', { courses: coursesList, req });
 };
@@ -204,6 +206,7 @@ exports.registryCourse = (req, res) => {
 *
 */
 exports.coursesAvailable = function (req, res) {
+  functions.isLogged(req, res);
   allCourses();
   const onlyAvailable = coursesList.filter(available => available.state == 'disponible');
   res.render('courses-available', { courses: onlyAvailable, req });
@@ -264,6 +267,7 @@ exports.removeFromCourse = (req, res) => {
 *
 */
 exports.myCourses = (req, res) => {
+  functions.isLogged(req, res);
   allCourses();
   coursesPerPerson();
   const insideCourse = coursePerson.filter(search => search.user_id == req.session.userId);
