@@ -28,7 +28,7 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-item nav-link active" href="/main">Home</a>
-          {{#if checkAdmin}}
+          {{#if (isAdmin req) }}
           <a class="nav-item nav-link" href="/courses">Cursos</a>
           <a class="nav-item nav-link" href="/">Cerrar sesión</a>
           <a class="nav-item nav-link disabled" href="/">Proximamente</a>

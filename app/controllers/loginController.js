@@ -24,7 +24,7 @@ exports.authenticated = (req, res) => {
     req.session.loggedIn = 1;
     req.session.userId = check.identity;
     req.session.userRole = check.role;
-    res.render('main', { checkAdmin: functions.isAdmin(req) });
+    res.render('main', { req });
   } else {
     res.render('index', { message: 'Estas credenciales no coinciden con nuestros registros.' });
   }
@@ -35,6 +35,5 @@ exports.authenticated = (req, res) => {
 *
 */
 exports.main = (req, res) => {
-  functions.checkLogged(req, res);
-  res.render('main', { checkAdmin: functions.isAdmin(req) });
+  res.render('main', { req });
 };

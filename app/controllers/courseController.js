@@ -1,5 +1,4 @@
 const fs = require('fs');
-const functions = require('../functions');
 
 let coursesList = [];
 let registeredPeople = [];
@@ -53,7 +52,7 @@ const coursesPerPerson = () => {
 */
 const saveCourse = () => {
   const data = JSON.stringify(coursesList);
-  fs.writeFile('courses.json', data, (err) => {
+  fs.writeFile('data/courses.json', data, (err) => {
     if (err) throw (err);
     console.log('Curso guardado correctamente');
   });
@@ -65,7 +64,7 @@ const saveCourse = () => {
 */
 const savePerson = () => {
   const data = JSON.stringify(registeredPeople);
-  fs.writeFile('registered.json', data, (err) => {
+  fs.writeFile('data/registered.json', data, (err) => {
     if (err) throw (err);
     console.log('Aspirante registrado correctamente');
   });
@@ -77,7 +76,7 @@ const savePerson = () => {
 */
 const saveCoursesPerPerson = () => {
   const data = JSON.stringify(coursePerson);
-  fs.writeFile('courses-per-person.json', data, (err) => {
+  fs.writeFile('data/courses-per-person.json', data, (err) => {
     if (err) throw (err);
     console.log('curso registrado para el estudiante');
   });
@@ -89,7 +88,15 @@ const saveCoursesPerPerson = () => {
 */
 exports.index = function (req, res) {
   allCourses();
-  res.render('courses', { courses: coursesList, checkAdmin: functions.isAdmin(req) });
+  res.render('courses', { courses: coursesList, req });
+};
+
+/**
+* add course
+*
+*/
+exports.addCourse = function (req, res) {
+  res.render('add-course', { req });
 };
 
 /**
@@ -99,7 +106,7 @@ exports.index = function (req, res) {
 exports.show = (req, res) => {
   allCourses();
   const show = coursesList.find(search => search.id == req.params.id);
-  res.render('show-course', { course: show });
+  res.render('show-course', { course: show, req });
 };
 
 /**
@@ -142,7 +149,7 @@ exports.store = (req, res) => {
 exports.enterCourse = (req, res) => {
   allCourses();
   const show = coursesList.find(search => search.id === req.params.id);
-  res.render('enter-course', { course: show });
+  res.render('enter-course', { course: show, req });
 };
 
 /**
@@ -199,7 +206,7 @@ exports.registryCourse = (req, res) => {
 exports.coursesAvailable = function (req, res) {
   allCourses();
   const onlyAvailable = coursesList.filter(available => available.state == 'disponible');
-  res.render('courses-available', { courses: onlyAvailable });
+  res.render('courses-available', { courses: onlyAvailable, req });
 };
 
 /**
@@ -222,7 +229,7 @@ exports.seeRegistered = function (req, res) {
     registeredCourse.push(createPerson);
   });
 
-  res.render('see-registered', { course: show, people: registeredCourse, checkAdmin: functions.isAdmin(req) });
+  res.render('see-registered', { course: show, people: registeredCourse, req });
 };
 
 /**
@@ -235,19 +242,19 @@ exports.updateCourseStatus = function (req, res) {
   const found = coursesList.find(search => search.id == req.params.id);
   found['state'] = 'cerrado';
   saveCourse();
-  res.redirect('/courses');
+  res.render('courses', { courses: coursesList, req });
 };
 
 /**
 * remove from course
 *
 */
-exports.removeFromCourse = function (req, res) {
+exports.removeFromCourse = (req, res) => {
   coursesPerPerson();
 
-  const newData = coursePerson.filter(search => !(search.course_id == req.params.course_id && search.user_id == req.params.student_id));
-  coursePerson = newData;
+  let code = coursePerson.findIndex(search => search.course_id == req.params.course_id && search.user_id == req.params.student_id);
+  coursePerson.splice(code, 1);
 
   saveCoursesPerPerson();
-  res.redirect('/courses');
+  res.render('courses', { courses: coursesList, req });
 };

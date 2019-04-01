@@ -4,6 +4,8 @@ const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
+require('./app/helpers');
+
 const ViewUtils = require('./viewUtils');
 const routes = require('./app/routes');
 

@@ -35,16 +35,6 @@ const checkExistsUser = (identity) => {
   return registeredUsers.find(search => search.identity === identity);
 };
 
-/**
-* checkLogged
-*
-*/
-const checkLogged = (req, res) => {
-  if (req.session.loggedIn !== 1) {
-    res.redirect('/');
-  }
-  return '';
-};
 
 /**
 * isAdmin
@@ -61,6 +51,5 @@ module.exports = {
   loadUsers,
   storeUsers,
   checkExistsUser,
-  checkLogged,
   isAdmin,
 };
