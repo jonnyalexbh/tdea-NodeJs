@@ -1,95 +1,16 @@
-const fs = require('fs');
 const functions = require('../functions');
 
 let coursesList = [];
-let registeredPeople = [];
+let registeredUsers = [];
 let coursePerson = [];
 
 /**
-* returns all courses
-*
-*/
-const allCourses = () => {
-  try {
-    coursesList = require('../../data/courses.json');
-  } catch (error) {
-    return [];
-  }
-
-  return [];
-};
-
-/**
-* people
-*
-*/
-const people = () => {
-  try {
-    registeredPeople = require('../../data/registered.json');
-  } catch (error) {
-    return [];
-  }
-
-  return [];
-};
-
-/**
-* returns coursesPerPerson
-*
-*/
-const coursesPerPerson = () => {
-  try {
-    coursePerson = require('../../data/courses-per-person.json');
-  } catch (error) {
-    return [];
-  }
-
-  return [];
-};
-
-/**
-* saveCourse
-*
-*/
-const saveCourse = () => {
-  const data = JSON.stringify(coursesList);
-  fs.writeFile('data/courses.json', data, (err) => {
-    if (err) throw (err);
-    console.log('Curso guardado correctamente');
-  });
-};
-
-/**
-* savePerson
-*
-*/
-const savePerson = () => {
-  const data = JSON.stringify(registeredPeople);
-  fs.writeFile('data/registered.json', data, (err) => {
-    if (err) throw (err);
-    console.log('Aspirante registrado correctamente');
-  });
-};
-
-/**
-* saveCoursesPerPerson
-*
-*/
-const saveCoursesPerPerson = () => {
-  const data = JSON.stringify(coursePerson);
-  fs.writeFile('data/courses-per-person.json', data, (err) => {
-    if (err) throw (err);
-    console.log('curso registrado para el estudiante');
-  });
-};
-
-/**
-* show all courses
+* all courses
 *
 */
 exports.index = (req, res) => {
   functions.isLogged(req, res);
-  allCourses();
+  coursesList = functions.loadCourses();
   res.render('courses', { courses: coursesList, req });
 };
 
@@ -97,7 +18,7 @@ exports.index = (req, res) => {
 * add course
 *
 */
-exports.addCourse = function (req, res) {
+exports.addCourse = (req, res) => {
   res.render('add-course', { req });
 };
 
@@ -106,8 +27,8 @@ exports.addCourse = function (req, res) {
 *
 */
 exports.show = (req, res) => {
-  allCourses();
-  const show = coursesList.find(search => search.id == req.params.id);
+  coursesList = functions.loadCourses();
+  const show = coursesList.find(search => search.id === req.params.id);
   res.render('show-course', { course: show, req });
 };
 
@@ -116,7 +37,7 @@ exports.show = (req, res) => {
 *
 */
 exports.store = (req, res) => {
-  allCourses();
+  coursesList = functions.loadCourses();
 
   const {
     id, name, modality, workload, description, cost,
@@ -136,7 +57,7 @@ exports.store = (req, res) => {
 
   if (!duplicate) {
     coursesList.push(course);
-    saveCourse();
+    functions.storeCourses(coursesList);
     res.redirect('/courses');
   } else {
     console.log('Ya existe otro curso con este id');
@@ -149,7 +70,7 @@ exports.store = (req, res) => {
 *
 */
 exports.enterCourse = (req, res) => {
-  allCourses();
+  coursesList = functions.loadCourses();
   const show = coursesList.find(search => search.id === req.params.id);
   res.render('enter-course', { course: show, req });
 };
@@ -159,8 +80,8 @@ exports.enterCourse = (req, res) => {
 *
 */
 exports.registryCourse = (req, res) => {
-  coursesPerPerson();
-  people();
+  coursePerson = functions.loadCoursesPerPerson();
+  registeredUsers = functions.loadUsers();
 
   const registryUser = {
     identity: req.body.identity,
@@ -174,7 +95,7 @@ exports.registryCourse = (req, res) => {
     course_id: req.body.course_id,
   };
 
-  const checkExistPerson = registeredPeople
+  const checkExistPerson = registeredUsers
     .find(search => search.identity === registryUser.identity);
 
   const checkDuplicate = coursePerson
@@ -184,19 +105,19 @@ exports.registryCourse = (req, res) => {
   if ((checkDuplicate.length >= 1 || checkDuplicate.length >= 1) && checkExistPerson) {
     console.log('ya estas inscrito en este curso');
     res.redirect('/courses-available');
-  } else if (checkDuplicate.length == 0 && !checkExistPerson) {
-    registeredPeople.push(registryUser);
+  } else if (checkDuplicate.length === 0 && !checkExistPerson) {
+    registeredUsers.push(registryUser);
     coursePerson.push(coursesPerson);
-    savePerson();
-    saveCoursesPerPerson();
+    functions.storeUsers(registeredUsers);
+    functions.storeCoursesPerPerson(coursePerson);
     res.redirect('/courses-available');
-  } else if (checkDuplicate.length == 0 && checkExistPerson) {
-    const newData = registeredPeople.filter(search => search.identity != registryUser.identity);
+  } else if (checkDuplicate.length === 0 && checkExistPerson) {
+    const newData = registeredUsers.filter(search => search.identity !== registryUser.identity);
     newData.push(registryUser);
     coursePerson.push(coursesPerson);
-    registeredPeople = newData;
-    savePerson();
-    saveCoursesPerPerson();
+    registeredUsers = newData;
+    functions.storeUsers(registeredUsers);
+    functions.storeCoursesPerPerson(coursePerson);
     res.redirect('/courses-available');
   }
 };
@@ -205,10 +126,10 @@ exports.registryCourse = (req, res) => {
 * show only available courses
 *
 */
-exports.coursesAvailable = function (req, res) {
+exports.coursesAvailable = (req, res) => {
   functions.isLogged(req, res);
-  allCourses();
-  const onlyAvailable = coursesList.filter(available => available.state == 'disponible');
+  coursesList = functions.loadCourses();
+  const onlyAvailable = coursesList.filter(available => available.state === 'disponible');
   res.render('courses-available', { courses: onlyAvailable, req });
 };
 
@@ -216,18 +137,18 @@ exports.coursesAvailable = function (req, res) {
 * seeRegistered
 *
 */
-exports.seeRegistered = function (req, res) {
-  allCourses();
-  people();
-  coursesPerPerson();
+exports.seeRegistered = (req, res) => {
+  coursesList = functions.loadCourses();
+  registeredUsers = functions.loadUsers();
+  coursePerson = functions.loadCoursesPerPerson();
 
-  registeredCourse = [];
+  const registeredCourse = [];
 
-  const show = coursesList.find(search => search.id == req.params.id);
-  const insideCourse = coursePerson.filter(search => search.course_id == req.params.id);
+  const show = coursesList.find(search => search.id === req.params.id);
+  const insideCourse = coursePerson.filter(search => search.course_id === req.params.id);
 
-  insideCourse.forEach(person => {
-    const createPerson = registeredPeople.find(search => search.identity == person.user_id);
+  insideCourse.forEach((person) => {
+    const createPerson = registeredUsers.find(search => search.identity === person.user_id);
     createPerson.course_id = req.params.id;
     registeredCourse.push(createPerson);
   });
@@ -239,12 +160,12 @@ exports.seeRegistered = function (req, res) {
 * update course status
 *
 */
-exports.updateCourseStatus = function (req, res) {
-  allCourses();
+exports.updateCourseStatus = (req, res) => {
+  coursesList = functions.loadCourses();
 
-  const found = coursesList.find(search => search.id == req.params.id);
-  found['state'] = 'cerrado';
-  saveCourse();
+  const found = coursesList.find(search => search.id === req.params.id);
+  found.state = 'cerrado';
+  functions.storeCourses(coursesList);
   res.render('courses', { courses: coursesList, req });
 };
 
@@ -253,12 +174,13 @@ exports.updateCourseStatus = function (req, res) {
 *
 */
 exports.removeFromCourse = (req, res) => {
-  coursesPerPerson();
+  coursePerson = functions.loadCoursesPerPerson();
 
-  let code = coursePerson.findIndex(search => search.course_id == req.params.course_id && search.user_id == req.params.student_id);
+  const code = coursePerson.findIndex(search => search.course_id === req.params.course_id
+    && search.user_id === req.params.student_id);
   coursePerson.splice(code, 1);
 
-  saveCoursesPerPerson();
+  functions.storeCoursesPerPerson(coursePerson);
   res.render('courses', { courses: coursesList, req });
 };
 
@@ -268,16 +190,16 @@ exports.removeFromCourse = (req, res) => {
 */
 exports.myCourses = (req, res) => {
   functions.isLogged(req, res);
-  allCourses();
-  coursesPerPerson();
-  const insideCourse = coursePerson.filter(search => search.user_id == req.session.userId);
+  coursesList = functions.loadCourses();
+  coursePerson = functions.loadCoursesPerPerson();
+  const insideCourse = coursePerson.filter(search => search.user_id === req.session.userId);
 
-  courses = [];
+  const courses = [];
 
-  insideCourse.forEach(item => {
-    const course = coursesList.find(search => search.id == item.course_id);
+  insideCourse.forEach((item) => {
+    const course = coursesList.find(search => search.id === item.course_id);
     courses.push(course);
   });
 
-  res.render('my-courses', { courses: courses, req });
+  res.render('my-courses', { courses, req });
 };
