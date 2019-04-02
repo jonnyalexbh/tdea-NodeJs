@@ -1,7 +1,7 @@
 {{>header}}
 <div class="container-fluid">
   <div class="pb-4 d-flex justify-content-between">
-    <h4>Gestionar cursos</h4>
+    <h4>Gestionar mis cursos</h4>
   </div>
   <table class="table table-sm">
     <thead class="thead-dark">
@@ -26,7 +26,7 @@
         <td>{{this.modality}}</td>
         <td>{{this.workload}}</td>
         <td>{{this.state}}</td>
-        <td><a class="btn btn-link btn-sm" href="#" role="button">Eliminar</a></td>
+        <td><a class="btn btn-link btn-sm" href="/remove-my-courses/{{this.id}}" role="button">Eliminar</a></td>
       </tr>
     </tbody>
     {{/each}}

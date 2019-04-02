@@ -68,7 +68,7 @@ const loadCoursesPerPerson = () => {
 */
 const storeCoursesPerPerson = (info) => {
   const data = JSON.stringify(info);
-  fs.writeFile('../data/courses-per-person.json', data, (err) => {
+  fs.writeFile('data/courses-per-person.json', data, (err) => {
     if (err) throw (err);
     console.log('Curso registrado para el estudiante');
   });

@@ -203,3 +203,19 @@ exports.myCourses = (req, res) => {
 
   res.render('my-courses', { courses, req });
 };
+
+
+/**
+* remove my courses
+*
+*/
+exports.removeMyCourses = (req, res) => {
+  coursePerson = functions.loadCoursesPerPerson();
+
+  const code = coursePerson.findIndex(search => search.course_id === req.params.course_id
+    && search.user_id === req.session.userId);
+  coursePerson.splice(code, 1);
+
+  functions.storeCoursesPerPerson(coursePerson);
+  res.render('my-courses', { courses: coursePerson, req });
+};

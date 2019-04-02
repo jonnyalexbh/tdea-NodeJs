@@ -23,5 +23,6 @@ router.get('/see-registered/:id', courseController.seeRegistered);
 router.get('/update-course-status/:id', courseController.updateCourseStatus);
 router.get('/remove-from-course/:course_id/:student_id', courseController.removeFromCourse);
 router.get('/my-courses', courseController.myCourses);
+router.get('/remove-my-courses/:course_id', courseController.removeMyCourses);
 
 module.exports = router;

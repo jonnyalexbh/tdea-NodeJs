@@ -23,6 +23,9 @@ exports.authenticated = (req, res) => {
   if (check) {
     req.session.loggedIn = 1;
     req.session.userId = check.identity;
+    req.session.name = check.name;
+    req.session.email = check.email;
+    req.session.phone = check.phone;
     req.session.userRole = check.role;
     res.render('main', { req });
   } else {
