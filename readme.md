@@ -6,6 +6,8 @@ Este repositorio contiene todas las entregas para la `Introducción a Node.js me
 
 * [Deliverable #1](https://github.com/jonnyalexbh/tdea-NodeJs/tree/delivery%231)
 * [Bonus Deliverable #1](https://github.com/jonnyalexbh/tdea-NodeJs/tree/bonus-delivery%231)
+* [Deliverable #2](https://github.com/jonnyalexbh/tdea-NodeJs/tree/delivery%231)
+* [Delivery#2-sprint1](https://github.com/jonnyalexbh/tdea-NodeJs/tree/delivery%232-sprint1)
 
 ### Clonar proyecto:
 ``` bash
