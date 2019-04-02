@@ -4,7 +4,7 @@
   "description": "second delivery tdea",
   "main": "app.js",
   "scripts": {
-    "start:dev": "nodemon -e js,hbs,json",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

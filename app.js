@@ -4,6 +4,7 @@ const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 
+const port = process.env.PORT || 3000;
 require('./app/helpers');
 
 const ViewUtils = require('./viewUtils');
@@ -29,6 +30,6 @@ ViewUtils.setupBaseUI(app);
 
 app.set('view engine', 'hbs');
 
-app.listen(3000, () => {
-  console.log('Escuchando por el puerto 3000');
+app.listen(port, () => {
+  console.log(`Escuchando por el puerto ${port}`);
 });
