@@ -20,19 +20,44 @@ client.connect(function (err) {
   const db = client.db(dbName);
 
   const collection = db.collection('students');
-  collection.insertOne({
-    name: 'jonnyalexbh',
-    math: 3,
-    english: 4,
-    programming: 4
-  }, (err, result) => {
+
+  /**
+  * find student
+  *
+  */
+
+  collection.findOne({ name: 'jonnyalexbh' }, (err, result) => {
     if (err) {
-      return console.log('error entering student');
+      return console.log('error');
     }
-    else {
-      return console.log(result.ops);
-    }
+    console.log(result);
   })
+
+  collection.find({ math: 3 }).toArray((err, result) => {
+    if (err) {
+      return console.log('error');
+    }
+    console.log(result);
+  })
+
+  /**
+  * insert student
+  *
+  */
+
+  // collection.insertOne({
+  //   name: 'jonnyalexbh',
+  //   math: 3,
+  //   english: 4,
+  //   programming: 4
+  // }, (err, result) => {
+  //   if (err) {
+  //     return console.log('error entering student');
+  //   }
+  //   else {
+  //     return console.log(result.ops);
+  //   }
+  // })
 
   client.close();
 });
