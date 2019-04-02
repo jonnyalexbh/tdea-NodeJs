@@ -22,23 +22,49 @@ client.connect(function (err) {
   const collection = db.collection('students');
 
   /**
+   * update student
+   *
+   */
+
+  collection.updateOne({ name: 'jonnyalexbh' }, {
+    $set:
+    {
+      english: 5, programming: 5
+    }
+  }, (err, result) => {
+    if (err) {
+      return console.log('error when updating' + result);
+    }
+    console.log('it was updated correctly');
+  });
+
+  collection.updateMany({ math: 3 }, {
+    $set: { math: 4 }
+  }, (err, result) => {
+    if (err) {
+      return console.log('error when updating' + result);
+    }
+    console.log('it was updated correctly');
+  });
+
+  /**
   * find student
   *
   */
 
-  collection.findOne({ name: 'jonnyalexbh' }, (err, result) => {
-    if (err) {
-      return console.log('error');
-    }
-    console.log(result);
-  })
+  // collection.findOne({ name: 'jonnyalexbh' }, (err, result) => {
+  //   if (err) {
+  //     return console.log('error');
+  //   }
+  //   console.log(result);
+  // })
 
-  collection.find({ math: 3 }).toArray((err, result) => {
-    if (err) {
-      return console.log('error');
-    }
-    console.log(result);
-  })
+  // collection.find({ math: 3 }).toArray((err, result) => {
+  //   if (err) {
+  //     return console.log('error');
+  //   }
+  //   console.log(result);
+  // })
 
   /**
   * insert student
