@@ -26,26 +26,26 @@ client.connect(function (err) {
    *
    */
 
-  collection.updateOne({ name: 'jonnyalexbh' }, {
-    $set:
-    {
-      english: 5, programming: 5
-    }
-  }, (err, result) => {
-    if (err) {
-      return console.log('error when updating' + result);
-    }
-    console.log('it was updated correctly');
-  });
+  // collection.updateOne({ name: 'jonnyalexbh' }, {
+  //   $set:
+  //   {
+  //     english: 5, programming: 5
+  //   }
+  // }, (err, result) => {
+  //   if (err) {
+  //     return console.log('error when updating' + result);
+  //   }
+  //   console.log('it was updated correctly');
+  // });
 
-  collection.updateMany({ math: 3 }, {
-    $set: { math: 4 }
-  }, (err, result) => {
-    if (err) {
-      return console.log('error when updating' + result);
-    }
-    console.log('it was updated correctly');
-  });
+  // collection.updateMany({ math: 3 }, {
+  //   $set: { math: 4 }
+  // }, (err, result) => {
+  //   if (err) {
+  //     return console.log('error when updating' + result);
+  //   }
+  //   console.log('it was updated correctly');
+  // });
 
   /**
   * find student
@@ -84,6 +84,20 @@ client.connect(function (err) {
   //     return console.log(result.ops);
   //   }
   // })
+
+  /**
+   * delete student
+   *
+   */
+
+  collection.deleteOne({ name: 'Daniela' }, (err, result) => {
+    if (err) {
+      return console.log('error deleting student');
+    }
+    else {
+      return console.log('the item has been removed');
+    }
+  })
 
   client.close();
 });
