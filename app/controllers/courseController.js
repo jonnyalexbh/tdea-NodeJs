@@ -1,21 +1,16 @@
 const fs = require('fs');
 
-coursesList = [];
-registeredPeople = [];
-coursePerson = [];
-
 /**
 * returns all courses
 *
 */
 const allCourses = () => {
   try {
-    coursesList = require('../../courses.json')
+    return require('../../data/courses.json');
+  } catch (error) {
+    return [];
   }
-  catch (error) {
-    return []
-  }
-}
+};
 
 /**
 * people
@@ -23,12 +18,11 @@ const allCourses = () => {
 */
 const people = () => {
   try {
-    registeredPeople = require('../../registered.json')
+    return require('../../data/registered.json');
+  } catch (error) {
+    return [];
   }
-  catch (error) {
-    return []
-  }
-}
+};
 
 /**
 * returns coursesPerPerson
@@ -36,209 +30,208 @@ const people = () => {
 */
 const coursesPerPerson = () => {
   try {
-    coursePerson = require('../../courses-per-person.json')
+    return require('../../data/courses-per-person.json');
+  } catch (error) {
+    return [];
   }
-  catch (error) {
-    return []
-  }
-}
+};
 
 /**
 * saveCourse
 *
 */
-const saveCourse = () => {
-  let data = JSON.stringify(coursesList)
-  fs.writeFile('courses.json', data, (err) => {
-    if (err) throw (err)
-    console.log('Curso guardado correctamente')
-  })
-}
+const saveCourse = (courses) => {
+  const data = JSON.stringify(courses);
+  fs.writeFile('data/courses.json', data, (err) => {
+    if (err) throw (err);
+    console.log('Curso guardado correctamente');
+  });
+};
 
 /**
 * savePerson
 *
 */
-const savePerson = () => {
-  let data = JSON.stringify(registeredPeople)
-  fs.writeFile('registered.json', data, (err) => {
-    if (err) throw (err)
-    console.log('Aspirante registrado correctamente')
-  })
-}
+const savePerson = (persons) => {
+  const data = JSON.stringify(persons);
+  fs.writeFile('data/registered.json', data, (err) => {
+    if (err) throw (err);
+    console.log('Aspirante registrado correctamente');
+  });
+};
 
 /**
 * saveCoursesPerPerson
 *
 */
-const saveCoursesPerPerson = () => {
-  let data = JSON.stringify(coursePerson)
-  fs.writeFile('courses-per-person.json', data, (err) => {
-    if (err) throw (err)
-    console.log('curso registrado para el estudiante')
-  })
-}
+const saveCoursesPerPerson = (info) => {
+  const data = JSON.stringify(info);
+  fs.writeFile('data/courses-per-person.json', data, (err) => {
+    if (err) throw (err);
+    console.log('curso registrado para el estudiante');
+  });
+};
 
 /**
 * show all courses
 *
 */
-exports.index = function (req, res) {
-  allCourses()
+exports.index = (req, res) => {
+  const coursesList = allCourses();
   res.render('courses', { courses: coursesList });
-}
+};
 
 /**
 * show course
 *
 */
-exports.show = function (req, res) {
-  allCourses()
-  let show = coursesList.find(search => search.id == req.params.id)
+exports.show = (req, res) => {
+  const coursesList = allCourses();
+  const show = coursesList.find(search => search.id === req.params.id);
   res.render('show-course', { course: show });
-}
+};
 
 /**
 * store a course
 *
 */
-exports.store = function (req, res) {
-  allCourses()
+exports.store = (req, res) => {
+  const coursesList = allCourses();
 
-  let course = {
+  const course = {
     id: req.body.id,
     name: req.body.name,
     modality: req.body.modality,
     workload: req.body.workload,
     description: req.body.description,
     state: 'disponible',
-    cost: req.body.cost
-  }
+    cost: req.body.cost,
+  };
 
-  let duplicate = coursesList.find(search => search.id == course.id)
+  const duplicate = coursesList.find(search => search.id === course.id);
 
   if (!duplicate) {
-    coursesList.push(course)
-    saveCourse()
+    coursesList.push(course);
+    saveCourse(coursesList);
     res.redirect('/courses');
-  }
-  else {
+  } else {
     console.log('Ya existe otro curso con este id');
     res.redirect('/courses');
   }
-}
+};
 
 /**
 * enter course
 *
 */
-exports.enterCourse = function (req, res) {
-  allCourses()
-  let show = coursesList.find(search => search.id == req.params.id)
+exports.enterCourse = (req, res) => {
+  const coursesList = allCourses();
+  const show = coursesList.find(search => search.id === req.params.id);
   res.render('enter-course', { course: show });
-}
+};
 
 /**
 * registry course
 *
 */
-exports.registryCourse = function (req, res) {
-  coursesPerPerson()
-  people()
+exports.registryCourse = (req, res) => {
+  const coursePerson = coursesPerPerson();
+  let registeredPeople = people();
 
-  let registryUser = {
+  const registryUser = {
     identity: req.body.identity,
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
-  }
+  };
 
-  let coursesPerson = {
+  const coursesPerson = {
     user_id: req.body.identity,
-    course_id: req.body.course_id
-  }
+    course_id: req.body.course_id,
+  };
 
-  let checkExistPerson = registeredPeople.find(search => search.identity == registryUser.identity)
-  let checkDuplicate = coursePerson.filter(search => search.user_id == registryUser.identity && search.course_id == coursesPerson.course_id)
+  const checkExistPerson = registeredPeople.find(search => search.identity
+    === registryUser.identity);
+  const checkDuplicate = coursePerson.filter(search => search.user_id === registryUser.identity
+    && search.course_id === coursesPerson.course_id);
 
-  if (checkDuplicate.length >= 1 || checkDuplicate.length >= 1 && checkExistPerson) {
+  if ((checkDuplicate.length >= 1 || checkDuplicate.length >= 1) && checkExistPerson) {
     console.log('ya estas inscrito en este curso');
     res.redirect('/courses-available');
-  }
-  else if (checkDuplicate.length == 0 && !checkExistPerson) {
-    registeredPeople.push(registryUser)
-    coursePerson.push(coursesPerson)
-    savePerson()
-    saveCoursesPerPerson()
+  } else if (checkDuplicate.length === 0 && !checkExistPerson) {
+    registeredPeople.push(registryUser);
+    coursePerson.push(coursesPerson);
+    savePerson(registeredPeople);
+    saveCoursesPerPerson(coursePerson);
+    res.redirect('/courses-available');
+  } else if (checkDuplicate.length === 0 && checkExistPerson) {
+    const newData = registeredPeople.filter(search => search.identity !== registryUser.identity);
+    newData.push(registryUser);
+    coursePerson.push(coursesPerson);
+    registeredPeople = newData;
+    savePerson(registeredPeople);
+    saveCoursesPerPerson(coursePerson);
     res.redirect('/courses-available');
   }
-  else if (checkDuplicate.length == 0 && checkExistPerson) {
-    let newData = registeredPeople.filter(search => search.identity != registryUser.identity)
-    newData.push(registryUser)
-    coursePerson.push(coursesPerson)
-    registeredPeople = newData
-    savePerson()
-    saveCoursesPerPerson()
-    res.redirect('/courses-available');
-  }
-}
+};
 
 /**
 * show only available courses
 *
 */
-exports.coursesAvailable = function (req, res) {
-  allCourses()
-  let onlyAvailable = coursesList.filter(available => available.state == 'disponible')
+exports.coursesAvailable = (req, res) => {
+  const coursesList = allCourses();
+  const onlyAvailable = coursesList.filter(available => available.state === 'disponible');
   res.render('courses-available', { courses: onlyAvailable });
-}
+};
 
 /**
 * seeRegistered
 *
 */
-exports.seeRegistered = function (req, res) {
-  allCourses()
-  people()
-  coursesPerPerson()
+exports.seeRegistered = (req, res) => {
+  const coursesList = allCourses();
+  const registeredPeople = people();
+  const coursePerson = coursesPerPerson();
 
-  registeredCourse = [];
+  const registeredCourse = [];
 
-  let show = coursesList.find(search => search.id == req.params.id)
-  let insideCourse = coursePerson.filter(search => search.course_id == req.params.id)
+  const show = coursesList.find(search => search.id === req.params.id);
+  const insideCourse = coursePerson.filter(search => search.course_id === req.params.id);
 
-  insideCourse.forEach(person => {
-    let createPerson = registeredPeople.find(search => search.identity == person.user_id)
+  insideCourse.forEach((person) => {
+    const createPerson = registeredPeople.find(search => search.identity === person.user_id);
     createPerson.course_id = req.params.id;
     registeredCourse.push(createPerson);
   });
 
   res.render('see-registered', { course: show, people: registeredCourse });
-}
+};
 
 /**
 * update course status
 *
 */
-exports.updateCourseStatus = function (req, res) {
-  allCourses()
+exports.updateCourseStatus = (req, res) => {
+  const coursesList = allCourses();
 
-  let found = coursesList.find(search => search.id == req.params.id)
-  found['state'] = 'cerrado'
-  saveCourse()
+  const found = coursesList.find(search => search.id === req.params.id);
+  found.state = 'cerrado';
+  saveCourse(coursesList);
   res.redirect('/courses');
-}
+};
 
 /**
 * remove from course
 *
 */
-exports.removeFromCourse = function (req, res) {
-  coursesPerPerson()
+exports.removeFromCourse = (req, res) => {
+  let coursePerson = coursesPerPerson();
 
-  let newData = coursePerson.filter(search => !(search.course_id == req.params.course_id && search.user_id == req.params.student_id))
-  coursePerson = newData
+  const newData = coursePerson.filter(search => !(
+    search.course_id === req.params.course_id && search.user_id === req.params.student_id));
+  coursePerson = newData;
 
-  saveCoursesPerPerson()
+  saveCoursesPerPerson(coursePerson);
   res.redirect('/courses');
-}
+};

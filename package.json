@@ -2,7 +2,7 @@
   "name": "second-delivery",
   "version": "1.0.0",
   "description": "second delivery tdea",
-  "main": "src/app.js",
+  "main": "app.js",
   "scripts": {
     "start:dev": "nodemon -e js,hbs,json",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -23,6 +23,7 @@
     "express": "^4.16.4",
     "hbs": "^4.0.3",
     "jquery": "^3.3.1",
+    "mongoose": "^5.4.21",
     "popper.js": "^1.14.7"
   },
   "devDependencies": {
