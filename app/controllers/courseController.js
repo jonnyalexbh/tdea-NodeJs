@@ -130,7 +130,7 @@ exports.store = (req, res) => {
   if (!duplicate) {
     coursesList.push(course);
     saveCourse(coursesList);
-    res.redirect('/courses');
+    res.render('courses', { courses: allCourses(), success: 'Curso registrado correctamente' });
   } else {
     res.render('create-course', { info: 'Ya existe otro curso con este id' });
   }

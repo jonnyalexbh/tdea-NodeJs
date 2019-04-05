@@ -4,6 +4,11 @@
     <h4>Ver cursos como administrador</h4>
     <a href="/create-course" class="btn btn-dark" role="button">Crear curso</a>
   </div>
+  {{#if success}}
+  <div class="alert alert-success" role="alert">
+    {{{success}}}
+  </div>
+  {{/if}}
   <table class="table table-sm">
     <thead class="thead-dark">
       <tr>
