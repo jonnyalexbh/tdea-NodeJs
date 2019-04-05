@@ -12,7 +12,7 @@ router.get('/main', loginController.main);
 router.get('/register', registerController.create);
 router.post('/register-store', registerController.store);
 
-router.get('/add-course', courseController.addCourse);
+router.get('/create-course', courseController.create);
 router.get('/courses', courseController.index);
 router.get('/show-course/:id', courseController.show);
 router.post('/store-course', courseController.store);

@@ -15,21 +15,11 @@ exports.index = (req, res) => {
 };
 
 /**
-* add course
+* create a course
 *
 */
-exports.addCourse = (req, res) => {
-  res.render('add-course', { req });
-};
-
-/**
-* show course
-*
-*/
-exports.show = (req, res) => {
-  coursesList = functions.loadCourses();
-  const show = coursesList.find(search => search.id === req.params.id);
-  res.render('show-course', { course: show, req });
+exports.create = (req, res) => {
+  res.render('create-course', { req });
 };
 
 /**
@@ -58,11 +48,20 @@ exports.store = (req, res) => {
   if (!duplicate) {
     coursesList.push(course);
     functions.storeCourses(coursesList);
-    res.redirect('/courses');
+    res.render('courses', { courses: functions.loadCourses(), req, success: 'Curso registrado correctamente' });
   } else {
-    console.log('Ya existe otro curso con este id');
-    res.redirect('/courses');
+    res.render('create-course', { req, info: 'Ya existe otro curso con este id' });
   }
+};
+
+/**
+* show course
+*
+*/
+exports.show = (req, res) => {
+  coursesList = functions.loadCourses();
+  const show = coursesList.find(search => search.id === req.params.id);
+  res.render('show-course', { course: show, req });
 };
 
 /**
@@ -88,6 +87,8 @@ exports.registryCourse = (req, res) => {
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
+    password: req.body.identity,
+    role: 'aspirante',
   };
 
   const coursesPerson = {
@@ -103,14 +104,13 @@ exports.registryCourse = (req, res) => {
       && search.course_id === coursesPerson.course_id);
 
   if ((checkDuplicate.length >= 1 || checkDuplicate.length >= 1) && checkExistPerson) {
-    console.log('ya estas inscrito en este curso');
-    res.redirect('/courses-available');
+    res.render('courses-available', { courses: functions.getCoursesAvailable(), req, info: 'Ya estas inscrito en este curso' });
   } else if (checkDuplicate.length === 0 && !checkExistPerson) {
     registeredUsers.push(registryUser);
     coursePerson.push(coursesPerson);
     functions.storeUsers(registeredUsers);
     functions.storeCoursesPerPerson(coursePerson);
-    res.redirect('/courses-available');
+    res.render('courses-available', { courses: functions.getCoursesAvailable(), req, success: 'Curso registrado correctamente' });
   } else if (checkDuplicate.length === 0 && checkExistPerson) {
     const newData = registeredUsers.filter(search => search.identity !== registryUser.identity);
     newData.push(registryUser);
@@ -118,7 +118,7 @@ exports.registryCourse = (req, res) => {
     registeredUsers = newData;
     functions.storeUsers(registeredUsers);
     functions.storeCoursesPerPerson(coursePerson);
-    res.redirect('/courses-available');
+    res.render('courses-available', { courses: functions.getCoursesAvailable(), req, success: 'Curso registrado correctamente' });
   }
 };
 
@@ -128,9 +128,7 @@ exports.registryCourse = (req, res) => {
 */
 exports.coursesAvailable = (req, res) => {
   functions.isLogged(req, res);
-  coursesList = functions.loadCourses();
-  const onlyAvailable = coursesList.filter(available => available.state === 'disponible');
-  res.render('courses-available', { courses: onlyAvailable, req });
+  res.render('courses-available', { courses: functions.getCoursesAvailable(), req });
 };
 
 /**

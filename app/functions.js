@@ -75,6 +75,15 @@ const storeCoursesPerPerson = (info) => {
 };
 
 /**
+* returns courses available
+*
+*/
+const getCoursesAvailable = () => {
+  const coursesList = loadCourses();
+  return coursesList.filter(available => available.state === 'disponible');
+};
+
+/**
 * checkExistsUser
 *
 */
@@ -113,6 +122,7 @@ module.exports = {
   storeCourses,
   storeUsers,
   storeCoursesPerPerson,
+  getCoursesAvailable,
   checkExistsUser,
   isAdmin,
   isLogged,

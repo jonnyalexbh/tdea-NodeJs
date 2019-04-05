@@ -3,11 +3,16 @@
   <div class="pb-4 d-flex justify-content-start">
     <h4>Cursos disponibles</h4>
   </div>
-  <div class="pb-2 text-center text-danger d-flex justify-content-center message">
-    {{#if message}}
-    {{{message}}}
-    {{/if}}
+  {{#if info}}
+  <div class="alert alert-info" role="alert">
+    {{{info}}}
   </div>
+  {{/if}}
+  {{#if success}}
+  <div class="alert alert-success" role="alert">
+    {{{success}}}
+  </div>
+  {{/if}}
   <table class="table table-sm">
     <thead class="thead-dark">
       <tr>
