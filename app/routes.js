@@ -4,6 +4,7 @@ const router = express.Router();
 const courseController = require('./controllers/courseController');
 
 router.get('/courses', courseController.index);
+router.get('/create-course', courseController.create);
 router.get('/show-course/:id', courseController.show);
 router.post('/store-course', courseController.store);
 router.get('/enter-course/:id', courseController.enterCourse);
@@ -15,10 +16,6 @@ router.get('/remove-from-course/:course_id/:student_id', courseController.remove
 
 router.get('/', (req, res) => {
   res.render('index');
-});
-
-router.get('/add-course', (req, res) => {
-  res.render('add-course');
 });
 
 module.exports = router;

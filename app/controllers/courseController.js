@@ -101,6 +101,14 @@ exports.show = (req, res) => {
 };
 
 /**
+* create a course
+*
+*/
+exports.create = (req, res) => {
+  res.render('create-course');
+};
+
+/**
 * store a course
 *
 */
@@ -124,8 +132,7 @@ exports.store = (req, res) => {
     saveCourse(coursesList);
     res.redirect('/courses');
   } else {
-    console.log('Ya existe otro curso con este id');
-    res.redirect('/courses');
+    res.render('create-course', { info: 'Ya existe otro curso con este id' });
   }
 };
 
