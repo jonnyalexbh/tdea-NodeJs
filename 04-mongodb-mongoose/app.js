@@ -5,6 +5,7 @@ const app = express();
 const path = require('path');
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const routes = require('./app/routes');
 
@@ -22,6 +23,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // routes
 app.use(routes);
+
+// mongose
+mongoose.connect('mongodb://localhost:27017/tdea-jabh', { useNewUrlParser: true }, (error) => {
+  if (error) {
+    return console.log(error);
+  }
+  return console.log('connected');
+});
 
 // install boostrap
 app.use('/css', express.static(path.join(nodeModulesDir, '/bootstrap/dist/css')));
