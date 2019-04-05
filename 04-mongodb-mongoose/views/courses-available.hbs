@@ -1,0 +1,30 @@
+{{>header}}
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-start">
+    <h4>Ver cursos como interesado</h4>
+  </div>
+  <table class="table table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Valor</th>
+        <th colspan="2" scope="col">Acciones</th>
+      </tr>
+    </thead>
+    {{#each courses}}
+    <tbody>
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.name}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.cost}}</td>
+        <td><a class="btn btn-link btn-sm" href="/show-course/{{this.id}}" role="button">Mostrar</a></td>
+        <td><a class="btn btn-link btn-sm" href="/enter-course/{{this.id}}" role="button">Inscribir</a></td>
+      </tr>
+    </tbody>
+    {{/each}}
+  </table>
+</div>
+{{>footer}}

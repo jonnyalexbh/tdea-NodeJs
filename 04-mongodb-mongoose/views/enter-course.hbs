@@ -1,0 +1,33 @@
+{{>header}}
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-start">
+    <h4>Inscribirme en el curso {{course.name}}</h4>
+  </div>
+  <form action="/registry-course" method="post">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="identity">Documento de identidad</label>
+        <input type="number" name="identity" required class="form-control" placeholder="Documento de identidad">
+        <input type="hidden" name="course_id" class="form-control" value="{{course.id}}">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="name">Nombre</label>
+        <input type="text" name="name" required class="form-control" placeholder="Nombre">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="email">Correo electrónico</label>
+        <input type="email" name="email" required class="form-control" placeholder="Correo electrónico">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="phone">Telefono</label>
+        <input type="text" name="phone" required class="form-control" placeholder="Telefono">
+      </div>
+    </div>
+    <div class="pb-4 d-flex justify-content-center">
+      <button type="submit" class="btn btn-dark">Inscribirme</button>
+    </div>
+  </form>
+</div>
+{{>footer}}
