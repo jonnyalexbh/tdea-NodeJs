@@ -3,6 +3,18 @@
   <div class="pb-4 d-flex justify-content-start">
     <h4>Ver cursos como interesado</h4>
   </div>
+  <div>
+    {{#if info}}
+    <div class="alert alert-info" role="alert">
+      {{{info}}}
+    </div>
+    {{/if}}
+    {{#if success}}
+    <div class="alert alert-success" role="alert">
+      {{{success}}}
+    </div>
+    {{/if}}
+  </div>
   <table class="table table-sm">
     <thead class="thead-dark">
       <tr>

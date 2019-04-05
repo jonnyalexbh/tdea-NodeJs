@@ -37,6 +37,15 @@ const coursesPerPerson = () => {
 };
 
 /**
+* returns courses available
+*
+*/
+const getCoursesAvailable = () => {
+  const coursesList = allCourses();
+  return coursesList.filter(available => available.state === 'disponible');
+};
+
+/**
 * saveCourse
 *
 */
@@ -155,15 +164,14 @@ exports.registryCourse = (req, res) => {
   const checkDuplicate = coursePerson.filter(search => search.user_id === registryUser.identity
     && search.course_id === coursesPerson.course_id);
 
-  if ((checkDuplicate.length >= 1 || checkDuplicate.length >= 1) && checkExistPerson) {
-    console.log('ya estas inscrito en este curso');
-    res.redirect('/courses-available');
+  if ((checkDuplicate.length >= 1) && checkExistPerson) {
+    res.render('courses-available', { courses: getCoursesAvailable(), info: 'ya estas inscrito en este curso' });
   } else if (checkDuplicate.length === 0 && !checkExistPerson) {
     registeredPeople.push(registryUser);
     coursePerson.push(coursesPerson);
     savePerson(registeredPeople);
     saveCoursesPerPerson(coursePerson);
-    res.redirect('/courses-available');
+    res.render('courses-available', { courses: getCoursesAvailable(), success: 'curso registrado correctamente' });
   } else if (checkDuplicate.length === 0 && checkExistPerson) {
     const newData = registeredPeople.filter(search => search.identity !== registryUser.identity);
     newData.push(registryUser);
@@ -171,7 +179,7 @@ exports.registryCourse = (req, res) => {
     registeredPeople = newData;
     savePerson(registeredPeople);
     saveCoursesPerPerson(coursePerson);
-    res.redirect('/courses-available');
+    res.render('courses-available', { courses: getCoursesAvailable(), success: 'curso registrado correctamente' });
   }
 };
 
@@ -180,9 +188,7 @@ exports.registryCourse = (req, res) => {
 *
 */
 exports.coursesAvailable = (req, res) => {
-  const coursesList = allCourses();
-  const onlyAvailable = coursesList.filter(available => available.state === 'disponible');
-  res.render('courses-available', { courses: onlyAvailable });
+  res.render('courses-available', { courses: getCoursesAvailable() });
 };
 
 /**
