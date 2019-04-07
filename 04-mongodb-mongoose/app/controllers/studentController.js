@@ -1,11 +1,24 @@
 Student = require('../models/student');
 
 /**
+* index
+*
+*/
+const index = (req, res) => {
+  Student.find({}).exec((error, response) => {
+    if (error) {
+      return console.log(error);
+    }
+    res.render('notes', { list: response });
+  })
+}
+
+/**
 * create notes
 *
 */
 const create = (req, res) => {
-  res.render('record-notes');
+  res.render('create-notes');
 };
 
 /**
@@ -22,14 +35,15 @@ const store = (req, res) => {
 
   student.save((error, result) => {
     if (error) {
-      res.render('record-notes', { show: error });
+      res.render('create-notes', { show: error });
     }
-    res.render('record-notes', { show: result });
+    res.render('create-notes', { show: result });
 
   });
 };
 
 module.exports = {
+  index,
   create,
   store,
 }

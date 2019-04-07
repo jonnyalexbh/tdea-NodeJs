@@ -1,0 +1,28 @@
+{{>header}}
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-between">
+    <h4>Notas</h4>
+    <a href="/create-notes" class="btn btn-dark" role="button">Registrar notas</a>
+  </div>
+  <table class="table table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Matematicas</th>
+        <th scope="col">Ingles</th>
+        <th scope="col">Programación</th>
+      </tr>
+    </thead>
+    {{#each list}}
+    <tbody>
+      <tr>
+        <th scope="row">{{this.name}}</th>
+        <td>{{this.math}}</td>
+        <td>{{this.english}}</td>
+        <td>{{this.programming}}</td>
+      </tr>
+    </tbody>
+    {{/each}}
+  </table>
+</div>
+{{>footer}}
