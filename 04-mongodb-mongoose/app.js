@@ -29,6 +29,15 @@ app.use(session({
   saveUninitialized: true
 }))
 
+// middleware
+app.use((req, res, next) => {
+  if (req.session.name) {
+    res.locals.sesion = true;
+    res.locals.name = req.session.name;
+  }
+  next();
+});
+
 // routes
 app.use(routes);
 
