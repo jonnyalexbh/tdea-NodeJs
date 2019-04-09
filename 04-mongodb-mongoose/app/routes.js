@@ -19,6 +19,7 @@ router.get('/create-notes', studentController.create);
 router.post('/store-notes', studentController.store);
 router.get('/edit-notes/:id', studentController.edit);
 router.post('/update-notes', studentController.update);
+router.get('/remove-notes/:id', studentController.destroy);
 
 router.get('/', (req, res) => {
   res.render('index');

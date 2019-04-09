@@ -76,10 +76,27 @@ const update = (req, res) => {
   })
 };
 
+/**
+* destroy notes
+*
+*/
+const destroy = (req, res) => {
+  Student.findOneAndDelete({ _id: req.params.id }, req.body, (error, result) => {
+    if (error) {
+      return console.log(error);
+    }
+    if (!result) {
+      return console.log('the student was not found');
+    }
+    res.redirect('/notes');
+  })
+};
+
 module.exports = {
   index,
   create,
   store,
   edit,
   update,
+  destroy,
 }
