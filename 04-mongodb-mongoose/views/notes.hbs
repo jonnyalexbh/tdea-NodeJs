@@ -11,6 +11,7 @@
         <th scope="col">Matematicas</th>
         <th scope="col">Ingles</th>
         <th scope="col">Programación</th>
+        <th scope="col">Acciones</th>
       </tr>
     </thead>
     {{#each list}}
@@ -20,6 +21,7 @@
         <td>{{this.math}}</td>
         <td>{{this.english}}</td>
         <td>{{this.programming}}</td>
+        <td><a class="btn btn-link btn-sm" href="/edit-notes/{{this.id}}" role="button">Actualizar</a></td>
       </tr>
     </tbody>
     {{/each}}

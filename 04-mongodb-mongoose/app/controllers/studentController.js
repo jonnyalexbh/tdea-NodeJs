@@ -42,8 +42,44 @@ const store = (req, res) => {
   });
 };
 
+/**
+* edit notes
+*
+*/
+const edit = (req, res) => {
+  Student.findById(req.params.id).exec((error, notes) => {
+    if (error) {
+      return console.log(error);
+    }
+    res.render('edit-notes', { notes: notes });
+  })
+};
+
+/**
+* update notes
+*
+*/
+const update = (req, res) => {
+  Student.findOneAndUpdate({ _id: req.body.id }, req.body, { new: true }, (error, result) => {
+    if (error) {
+      return console.log(error);
+    }
+    res.render('edit-notes', {
+      notes: {
+        id: result.id,
+        name: result.name,
+        math: result.math,
+        english: result.english,
+        programming: result.programming
+      }
+    });
+  })
+};
+
 module.exports = {
   index,
   create,
   store,
+  edit,
+  update,
 }

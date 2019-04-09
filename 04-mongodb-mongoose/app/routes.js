@@ -17,6 +17,8 @@ router.get('/remove-from-course/:course_id/:student_id', courseController.remove
 router.get('/notes', studentController.index);
 router.get('/create-notes', studentController.create);
 router.post('/store-notes', studentController.store);
+router.get('/edit-notes/:id', studentController.edit);
+router.post('/update-notes', studentController.update);
 
 router.get('/', (req, res) => {
   res.render('index');
