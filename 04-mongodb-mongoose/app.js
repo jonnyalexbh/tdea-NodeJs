@@ -6,6 +6,7 @@ const path = require('path');
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require('express-session')
 
 const routes = require('./app/routes');
 
@@ -20,6 +21,13 @@ const partialsDirectory = path.join(__dirname, 'partials');
 app.use(express.static(publicDirectory));
 hbs.registerPartials(partialsDirectory);
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// session
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
 
 // routes
 app.use(routes);

@@ -26,7 +26,10 @@ exports.authenticated = (req, res) => {
       return res.render('index', { message: 'password is not correct' });
     }
 
-    return res.render('main', { message: result.name });
+    req.session.user_id = result._id;
+    req.session.name = result.name;
+
+    return res.render('main', { req });
   })
 };
 

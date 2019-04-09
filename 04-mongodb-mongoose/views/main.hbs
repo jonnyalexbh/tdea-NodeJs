@@ -1,12 +1,7 @@
 {{>header}}
 <div class="container-fluid">
   <div class="pb-4 d-flex justify-content-center">
-    <h4></h4>
-    <div class="pb-2 text-center d-flex justify-content-center message">
-      {{#if message}}
-      <h4>Bienvenido a la página de Educación continua {{{message}}}</h4>
-      {{/if}}
-    </div>
+    <h4>Bienvenido a la página de Educación continua {{req.session.name}}</h4>
   </div>
   <div class="pb-4 d-flex justify-content-center">
     <img src="/img/inscripciones_sapiencia.jpg" alt="logo Tecnológico de Antioquia">
