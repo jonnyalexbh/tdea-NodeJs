@@ -11,6 +11,10 @@ const StudentSchema = new Schema({
     trim: true,
     unique: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
   math: {
     type: Number,
     default: 0,

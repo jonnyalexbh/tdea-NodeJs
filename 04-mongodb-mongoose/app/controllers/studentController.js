@@ -1,4 +1,5 @@
 Student = require('../models/student');
+const bcrypt = require('bcrypt');
 
 /**
 * index
@@ -28,6 +29,7 @@ const create = (req, res) => {
 const store = (req, res) => {
   let student = new Student({
     name: req.body.name,
+    password: bcrypt.hashSync(req.body.password, 10),
     math: req.body.math,
     english: req.body.english,
     programming: req.body.programming,

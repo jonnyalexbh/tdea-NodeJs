@@ -1,8 +1,13 @@
 const express = require('express');
 
 const router = express.Router();
+const loginController = require('./controllers/loginController');
 const courseController = require('./controllers/courseController');
 const studentController = require('./controllers/studentController');
+
+router.get('/', loginController.index);
+router.post('/login', loginController.authenticated);
+router.get('/main', loginController.main);
 
 router.get('/courses', courseController.index);
 router.get('/show-course/:id', courseController.show);
