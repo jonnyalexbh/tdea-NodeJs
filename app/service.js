@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const Course = require('../models/course');
+const CourseByUser = require('../models/coursexuser');
 const User = require('../models/user');
 
 const loadCourses = async () => Course.find({});
@@ -127,8 +128,44 @@ const registerUser = async (data) => {
 
 const courseById = async courseId => Course.findOne({ id: courseId });
 
+const registerCourse = async (data) => {
+  const response = {
+    state: -1,
+    courses: await getCoursesAvailable(),
+  };
+
+  const registeredUser = {
+    identity: data.identity,
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    password: data.identity,
+  };
+
+  const coursesPerson = {
+    userId: data.identity,
+    courseId: data.courseId,
+  };
+
+  const user = await User.findOne({ identity: registeredUser.identity });
+  const userInCourse = await CourseByUser
+    .findOne({ userId: coursesPerson.identity, courseId: coursesPerson.courseId });
+
+  if (user && userInCourse) {
+    response.state = 0;
+    return response;
+  }
+
+  const newCourseByUser = new CourseByUser(coursesPerson);
+  await newCourseByUser.save();
+  response.data = coursesPerson;
+  response.state = 1;
+  return response;
+};
+
 module.exports = {
   createCourse,
+  registerCourse,
   loadCourses,
   registerUser,
   courseById,

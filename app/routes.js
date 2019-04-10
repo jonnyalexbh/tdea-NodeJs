@@ -18,7 +18,7 @@ router.get('/courses', courseController.index); //
 router.get('/show-course/:id', courseController.show); //
 router.post('/store-course', courseController.store); //
 router.get('/enter-course/:id', courseController.enterCourse);
-router.post('/registry-course', courseController.registryCourse);
+router.post('/registry-course', courseController.registryCourse); //
 router.get('/courses-available', courseController.coursesAvailable);
 router.get('/see-registered/:id', courseController.seeRegistered);
 router.get('/update-course-status/:id', courseController.updateCourseStatus);

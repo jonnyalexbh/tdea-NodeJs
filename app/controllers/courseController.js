@@ -50,52 +50,22 @@ exports.enterCourse = (req, res) => {
   res.render('enter-course', { course: show, req });
 };
 
-/**
-* registry course
-*
-*/
 exports.registryCourse = (req, res) => {
-  coursePerson = functions.loadCoursesPerPerson();
-  registeredUsers = functions.loadUsers();
+  functions.registerCourse(req.body)
+    .then(({ state, courses }) => {
+      switch (state) {
+        case 0:
+          res.render('courses-available', { courses, req, info: 'Ya estas inscrito en este curso' });
+          break;
 
-  const registryUser = {
-    identity: req.body.identity,
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    password: req.body.identity,
-    role: 'aspirante',
-  };
-
-  const coursesPerson = {
-    user_id: req.body.identity,
-    course_id: req.body.course_id,
-  };
-
-  const checkExistPerson = registeredUsers
-    .find(search => search.identity === registryUser.identity);
-
-  const checkDuplicate = coursePerson
-    .filter(search => search.user_id === registryUser.identity
-      && search.course_id === coursesPerson.course_id);
-
-  if ((checkDuplicate.length >= 1 || checkDuplicate.length >= 1) && checkExistPerson) {
-    res.render('courses-available', { courses: functions.getCoursesAvailable(), req, info: 'Ya estas inscrito en este curso' });
-  } else if (checkDuplicate.length === 0 && !checkExistPerson) {
-    registeredUsers.push(registryUser);
-    coursePerson.push(coursesPerson);
-    functions.storeUsers(registeredUsers);
-    functions.storeCoursesPerPerson(coursePerson);
-    res.render('courses-available', { courses: functions.getCoursesAvailable(), req, success: 'Curso registrado correctamente' });
-  } else if (checkDuplicate.length === 0 && checkExistPerson) {
-    const newData = registeredUsers.filter(search => search.identity !== registryUser.identity);
-    newData.push(registryUser);
-    coursePerson.push(coursesPerson);
-    registeredUsers = newData;
-    functions.storeUsers(registeredUsers);
-    functions.storeCoursesPerPerson(coursePerson);
-    res.render('courses-available', { courses: functions.getCoursesAvailable(), req, success: 'Curso registrado correctamente' });
-  }
+        default:
+          res.render('courses-available', { courses, req, success: 'Curso registrado correctamente' });
+          break;
+      }
+    })
+    .catch((error) => {
+      res.render('courses-available', { courses: [], req, success: error.message });
+    });
 };
 
 /**
