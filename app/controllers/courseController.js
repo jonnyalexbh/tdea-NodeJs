@@ -102,9 +102,10 @@ exports.registryCourse = (req, res) => {
 * show only available courses
 *
 */
-exports.coursesAvailable = (req, res) => {
-  functions.isLogged(req, res);
-  res.render('courses-available', { courses: functions.getCoursesAvailable(), req });
+exports.coursesAvailable = (req, res, next) => {
+  functions.getCoursesAvailable()
+    .then(courses => res.render('courses', { courses, req }))
+    .catch(error => next(error));
 };
 
 /**
