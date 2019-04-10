@@ -1,4 +1,4 @@
-const functions = require('../functions');
+const functions = require('../service');
 
 let registeredUsers = [];
 
@@ -6,41 +6,32 @@ let registeredUsers = [];
 * login
 *
 */
-exports.index = (req, res) => {
-  res.render('index');
-};
+exports.index = (req, res) => res.render('index');
 
 /**
 * authenticated
 *
 */
 exports.authenticated = (req, res) => {
-  registeredUsers = functions.loadUsers();
-  const check = registeredUsers
-    .find(search => search.identity === req.body.user
-      && search.password === req.body.pass);
-
-  if (check) {
-    req.session.loggedIn = 1;
-    req.session.userId = check.identity;
-    req.session.name = check.name;
-    req.session.email = check.email;
-    req.session.phone = check.phone;
-    req.session.userRole = check.role;
-    res.render('main', { req });
-  } else {
-    res.render('index', { message: 'Estas credenciales no coinciden con nuestros registros.' });
-  }
+  functions.logIn(req.body)
+    .then((data) => {
+      const sessionData = {
+        loggedIn: 1,
+        userId: data.identity,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        userRole: data.role,
+      };
+      Object.assign(req.session, sessionData);
+      res.render('main', { req });
+    })
+    .catch(() => {
+      res.render('index', { message: 'Estas credenciales no coinciden con nuestros registros.' });
+    });
 };
 
-/**
-* main
-*
-*/
-exports.main = (req, res) => {
-  functions.isLogged(req, res);
-  res.render('main', { req });
-};
+exports.main = (req, res) => res.render('main', { req });
 
 /**
 * logout

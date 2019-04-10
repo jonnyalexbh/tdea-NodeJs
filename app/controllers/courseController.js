@@ -1,4 +1,4 @@
-const functions = require('../functions');
+const functions = require('../service');
 
 let coursesList = [];
 let registeredUsers = [];
@@ -8,60 +8,36 @@ let coursePerson = [];
 * all courses
 *
 */
-exports.index = (req, res) => {
+exports.index = (req, res, next) => {
   functions.isLogged(req, res);
-  coursesList = functions.loadCourses();
-  res.render('courses', { courses: coursesList, req });
+  functions.loadCourses()
+    .then(courses => res.render('courses', { courses, req }))
+    .catch(error => next(error));
 };
 
-/**
-* create a course
-*
-*/
-exports.create = (req, res) => {
-  res.render('create-course', { req });
-};
+exports.create = (req, res) => res.render('create-course', { req });
 
 /**
 * store a course
 *
 */
 exports.store = (req, res) => {
-  coursesList = functions.loadCourses();
-
-  const {
-    id, name, modality, workload, description, cost,
-  } = req.body;
-
-  const course = {
-    id,
-    name,
-    modality,
-    workload,
-    description,
-    state: 'disponible',
-    cost,
-  };
-
-  const duplicate = coursesList.find(search => search.id === course.id);
-
-  if (!duplicate) {
-    coursesList.push(course);
-    functions.storeCourses(coursesList);
-    res.render('courses', { courses: functions.loadCourses(), req, success: 'Curso registrado correctamente' });
-  } else {
-    res.render('create-course', { req, info: 'Ya existe otro curso con este id' });
-  }
+  functions.createCourse(req.body)
+    .then(() => {
+      res.render('courses', { courses: functions.loadCourses(), req, success: 'Curso registrado correctamente' });
+    })
+    .catch((error) => {
+      console.error('Error', error);
+      res.render('create-course', { req, info: 'Ya existe otro curso con este id' });
+    });
 };
 
-/**
-* show course
-*
-*/
-exports.show = (req, res) => {
-  coursesList = functions.loadCourses();
-  const show = coursesList.find(search => search.id === req.params.id);
-  res.render('show-course', { course: show, req });
+exports.show = (req, res, next) => {
+  functions.courseById(req.params.id)
+    .then((course) => {
+      res.render('show-course', { course, req });
+    })
+    .catch(error => next(error));
 };
 
 /**

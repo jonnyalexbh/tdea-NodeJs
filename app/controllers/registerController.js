@@ -1,40 +1,13 @@
-const functions = require('../functions');
+const Service = require('../service');
 
-let registeredUsers = [];
+exports.create = (req, res) => res.render('register');
 
-/**
-* create user
-*
-*/
-exports.create = (req, res) => {
-  res.render('register');
-};
-
-/**
-* strore user
-*
-*/
 exports.store = (req, res) => {
-  registeredUsers = functions.loadUsers();
-
-  const {
-    identity, name, email, phone,
-  } = req.body;
-
-  const registerUser = {
-    identity,
-    name,
-    email,
-    phone,
-    password: identity,
-    role: 'aspirante',
-  };
-
-  if (functions.checkExistsUser(registerUser.identity)) {
-    res.render('register', { message: 'La informacion ingresada ya existe en nuestra base de datos' });
-  } else {
-    registeredUsers.push(registerUser);
-    functions.storeUsers(registeredUsers);
-    res.redirect('/');
-  }
+  Service.registerUser(req.body)
+    .then(() => {
+      res.redirect('/');
+    })
+    .catch(() => {
+      res.render('register', { message: 'La informacion ingresada ya existe en nuestra base de datos' });
+    });
 };

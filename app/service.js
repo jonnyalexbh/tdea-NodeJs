@@ -1,18 +1,9 @@
 const fs = require('fs');
 
-let registeredUsers = [];
+const Course = require('../models/course');
+const User = require('../models/user');
 
-/**
-*  load courses
-*
-*/
-const loadCourses = () => {
-  try {
-    return require('../data/courses.json');
-  } catch (error) {
-    return [];
-  }
-};
+const loadCourses = async () => Course.find({});
 
 /**
 * storeCourses
@@ -78,10 +69,7 @@ const storeCoursesPerPerson = (info) => {
 * returns courses available
 *
 */
-const getCoursesAvailable = () => {
-  const coursesList = loadCourses();
-  return coursesList.filter(available => available.state === 'disponible');
-};
+const getCoursesAvailable = async () => Course.find({ state: true });
 
 /**
 * checkExistsUser
@@ -112,11 +100,38 @@ const isLogged = (req, res) => {
   if (!req.session.loggedIn) {
     res.redirect('/');
   }
-  return 0;
+
+  return false;
 };
 
+const createCourse = async (data) => {
+  const course = await Course.findOne({ id: data.id });
+  if (course) throw new Error('Course already exists');
+  const newCourse = new Course(data);
+  await newCourse.save();
+};
+
+const logIn = async ({ user, pass }) => {
+  const model = User.findOne({ identity: user, password: pass });
+  if (!model) throw new Error('User not found');
+  return model;
+};
+
+const registerUser = async (data) => {
+  const existsUser = await User.findOne({ identity: data.identity });
+  console.log(existsUser);
+  if (existsUser) throw new Error('User already exists');
+  const user = new User({ ...data, password: data.identity });
+  await user.save();
+};
+
+const courseById = async courseId => Course.findOne({ id: courseId });
+
 module.exports = {
+  createCourse,
   loadCourses,
+  registerUser,
+  courseById,
   loadUsers,
   loadCoursesPerPerson,
   storeCourses,
@@ -126,4 +141,5 @@ module.exports = {
   checkExistsUser,
   isAdmin,
   isLogged,
+  logIn,
 };

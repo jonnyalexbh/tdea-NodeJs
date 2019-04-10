@@ -5,17 +5,18 @@ const courseController = require('./controllers/courseController');
 const loginController = require('./controllers/loginController');
 const registerController = require('./controllers/registerController');
 
-router.get('/', loginController.index);
-router.get('/logout', loginController.logout);
-router.post('/login', loginController.authenticated);
-router.get('/main', loginController.main);
-router.get('/register', registerController.create);
-router.post('/register-store', registerController.store);
+router.get('/', loginController.index); //
+router.get('/logout', loginController.logout); //
+router.post('/login', loginController.authenticated); //
+router.get('/main', loginController.main); //
+router.get('/register', registerController.create); //
+router.post('/register-store', registerController.store); //
 
-router.get('/create-course', courseController.create);
-router.get('/courses', courseController.index);
-router.get('/show-course/:id', courseController.show);
-router.post('/store-course', courseController.store);
+// Course's endpoints;
+router.get('/create-course', courseController.create); //
+router.get('/courses', courseController.index); //
+router.get('/show-course/:id', courseController.show); //
+router.post('/store-course', courseController.store); //
 router.get('/enter-course/:id', courseController.enterCourse);
 router.post('/registry-course', courseController.registryCourse);
 router.get('/courses-available', courseController.coursesAvailable);
