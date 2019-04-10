@@ -22,17 +22,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // session
 app.use(session({ secret: 'secreto tdea', resave: false, saveUninitialized: true }));
 
-// routes
-app.use('/', routes);
-app.use((err, req, res, next) => {
-  res.status(500)
-    .end('Something went wrong');
-});
-
 // install boostrap
 ViewUtils.setupBaseUI(app);
 
 app.set('view engine', 'hbs');
+
+// routes
+app.use('/', routes);
+app.use((err, req, res, next) => {
+  res.render('error');
+});
 
 app.listen(port, () => {
   console.log(`Escuchando por el puerto ${port}`);

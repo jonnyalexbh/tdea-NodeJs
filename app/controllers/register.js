@@ -1,6 +1,9 @@
 const Service = require('../service');
 
-exports.create = (req, res) => res.render('register');
+exports.create = (req, res, next) => {
+  return next(new Error('this is fucked up'));
+  // res.render('register');
+};
 
 exports.store = (req, res) => {
   Service.registerUser(req.body)

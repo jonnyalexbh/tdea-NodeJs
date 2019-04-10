@@ -6,7 +6,7 @@ const authenticated = (req, res) => {
   Service.logIn(req.body)
     .then((data) => {
       const sessionData = {
-        loggedIn: 1,
+        loggedIn: true,
         userId: data.identity,
         name: data.name,
         email: data.email,
