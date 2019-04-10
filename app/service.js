@@ -70,7 +70,7 @@ const storeCoursesPerPerson = (info) => {
 * returns courses available
 *
 */
-const getCoursesAvailable = async () => Course.find({ state: true });
+const getCoursesAvailable = async () => Course.find({ state: 'disponible' });
 
 /**
 * checkExistsUser
