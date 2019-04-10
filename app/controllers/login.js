@@ -1,19 +1,9 @@
-const functions = require('../service');
+const Service = require('../service');
 
-let registeredUsers = [];
+const index = (req, res) => res.render('index');
 
-/**
-* login
-*
-*/
-exports.index = (req, res) => res.render('index');
-
-/**
-* authenticated
-*
-*/
-exports.authenticated = (req, res) => {
-  functions.logIn(req.body)
+const authenticated = (req, res) => {
+  Service.logIn(req.body)
     .then((data) => {
       const sessionData = {
         loggedIn: 1,
@@ -31,13 +21,16 @@ exports.authenticated = (req, res) => {
     });
 };
 
-exports.main = (req, res) => res.render('main', { req });
+const main = (req, res) => res.render('main', { req });
 
-/**
-* logout
-*
-*/
-exports.logout = (req, res) => {
+const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
+};
+
+module.exports = {
+  index,
+  authenticated,
+  main,
+  logout,
 };

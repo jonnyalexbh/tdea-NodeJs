@@ -1,108 +1,16 @@
-const fs = require('fs');
-
-const Course = require('../models/course');
-const CourseByUser = require('../models/coursexuser');
-const User = require('../models/user');
+const Course = require('./models/course');
+const CourseByUser = require('./models/coursexuser');
+const User = require('./models/user');
 
 const loadCourses = async () => Course.find({});
 
-/**
-* storeCourses
-*
-*/
-const storeCourses = (courses) => {
-  const data = JSON.stringify(courses);
-  fs.writeFile('data/courses.json', data, (err) => {
-    if (err) throw (err);
-    console.log('Curso guardado correctamente');
-  });
-};
-
-/**
-* loadUsers
-*
-*/
-const loadUsers = () => {
-  try {
-    return require('../data/registered.json');
-  } catch (error) {
-    return [];
-  }
-};
-
-/**
-* storeUsers
-*
-*/
-const storeUsers = (users) => {
-  const data = JSON.stringify(users);
-  fs.writeFile('data/registered.json', data, (err) => {
-    if (err) throw (err);
-    console.log('Aspirante registrado correctamente');
-  });
-};
-
-/**
-* loadCoursesPerPerson
-*
-*/
-const loadCoursesPerPerson = () => {
-  try {
-    return require('../data/courses-per-person.json');
-  } catch (error) {
-    return [];
-  }
-};
-
-/**
-* storeCoursesPerPerson
-*
-*/
-const storeCoursesPerPerson = (info) => {
-  const data = JSON.stringify(info);
-  fs.writeFile('data/courses-per-person.json', data, (err) => {
-    if (err) throw (err);
-    console.log('Curso registrado para el estudiante');
-  });
-};
-
-/**
-* returns courses available
-*
-*/
 const getCoursesAvailable = async () => Course.find({ state: 'disponible' });
 
-/**
-* checkExistsUser
-*
-*/
-const checkExistsUser = (identity) => {
-  registeredUsers = loadUsers();
-  return registeredUsers.find(search => search.identity === identity);
-};
-
-
-/**
-* isAdmin
-*
-*/
 const isAdmin = (req) => {
   if (req.session.userRole === 'admin') {
     return 1;
   }
   return 0;
-};
-
-/**
-* isLogged
-*
-*/
-const isLogged = (req, res) => {
-  if (!req.session.loggedIn) {
-    res.redirect('/');
-  }
-
-  return false;
 };
 
 const createCourse = async (data) => {
@@ -163,20 +71,53 @@ const registerCourse = async (data) => {
   return response;
 };
 
+const readUsersInCourse = async ({ courseId }) => {
+  const course = await Course.findOne({ id: courseId });
+  const userIds = await CourseByUser.distinct('userId', { courseId });
+  const people = await User.find({ identity: { $in: userIds } });
+
+  return {
+    course,
+    people,
+  };
+};
+
+const closeCourse = async (data) => {
+  Course.findOneAndUpdate({ id: data.id }, { $set: { state: 'cerrado' } });
+  const courses = await loadCourses();
+  return courses;
+};
+
+const unsubscribeStudent = async ({ courseId, userId }) => {
+  await CourseByUser.deleteMany({ courseId, userId });
+  const courses = await loadCourses();
+  return courses;
+};
+
+const readMyCourses = async (userId) => {
+  const courseIds = await CourseByUser.distinct('courseId', { userId });
+  const courses = await Course.find({ id: { $in: courseIds } });
+  return courses;
+};
+
+const removeCourseById = async ({ courseId, userId }) => {
+  await CourseByUser.deleteMany({ courseId, userId });
+  const myCourses = await readMyCourses(userId);
+  return myCourses;
+};
+
 module.exports = {
-  createCourse,
-  registerCourse,
-  loadCourses,
-  registerUser,
+  closeCourse,
   courseById,
-  loadUsers,
-  loadCoursesPerPerson,
-  storeCourses,
-  storeUsers,
-  storeCoursesPerPerson,
+  createCourse,
   getCoursesAvailable,
-  checkExistsUser,
   isAdmin,
-  isLogged,
+  loadCourses,
   logIn,
+  readMyCourses,
+  readUsersInCourse,
+  registerCourse,
+  registerUser,
+  removeCourseById,
+  unsubscribeStudent,
 };

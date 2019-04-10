@@ -4,6 +4,7 @@
   "description": "second delivery tdea",
   "main": "app.js",
   "scripts": {
+    "lint": "eslint app/",
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
