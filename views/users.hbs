@@ -1,0 +1,42 @@
+{{>header}}
+
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-between">
+    <h4>Gestión de usuarios</h4>
+  </div>
+
+  {{#if success}}
+  <div class="alert alert-success" role="alert">
+    {{success}}
+  </div>
+  {{/if}}
+
+  <table class="table table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    {{#each users}}
+    <tbody>
+      <tr>
+        <td>{{identity}}</td>
+        <td>{{name}}</td>
+        <td>{{email}}</td>
+        <td>{{phone}}</td>
+        <td>{{role}}</td>
+        <td>
+          <a href="/edit-user/{{_id}}">Editar</a>
+        </td>
+      </tr>
+    </tbody>
+    {{/each}}
+  </table>
+</div>
+
+{{>footer}}

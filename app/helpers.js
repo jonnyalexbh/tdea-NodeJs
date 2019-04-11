@@ -1,8 +1,4 @@
 const hbs = require('hbs');
 
-hbs.registerHelper('isAdmin', ({ session: { userRole } }) => {
-  if (userRole === 'admin') {
-    return true;
-  }
-  return false;
-});
+hbs.registerHelper('isAdmin', ({ session: { userRole } }) => userRole === 'admin');
+hbs.registerHelper('isSelectedRole', (currentRole, displayedRole) => currentRole === displayedRole);

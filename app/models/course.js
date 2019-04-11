@@ -39,6 +39,10 @@ const Course = new Schema({
     required: true,
     min: 0,
   },
+  teacherId: {
+    type: String,
+    required: false,
+  },
 });
 
 module.exports = connection.model('Course', Course);

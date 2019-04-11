@@ -2,7 +2,6 @@
 <div class="container-fluid">
   <div class="pb-4 d-flex justify-content-between">
     <h4>Gestionar cursos</h4>
-    <a href="/create-course" class="btn btn-dark" role="button">Crear curso</a>
   </div>
   {{#if success}}
   <div class="alert alert-success" role="alert">
@@ -19,7 +18,7 @@
         <th scope="col">Modalidad</th>
         <th scope="col">Intensidad Horaria</th>
         <th scope="col">Estado</th>
-        <th colspan="2" scope="col">Acciones</th>
+        <th scope="col">Acciones</th>
       </tr>
     </thead>
     {{#each courses}}
@@ -32,12 +31,6 @@
         <td>{{modality}}</td>
         <td>{{workload}}</td>
         <td>{{state}}</td>
-        <td>
-          <form action="/update-course-status" method="POST">
-            <input name="courseId" type="hidden" value="{{id}}">
-            <input type="submit" value="Actualizar estado" class="btn btn-link">
-          </form>
-        </td>
         </td>
         <td><a class="btn btn-link btn-sm" href="/see-registered/{{this.id}}" role="button">Ver inscritos</a></td>
       </tr>

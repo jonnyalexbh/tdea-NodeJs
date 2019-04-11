@@ -26,17 +26,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="/main">Home</a>
-          {{#if (isAdmin req) }}
-          <a class="nav-item nav-link" href="/courses">Cursos</a>
-          {{else}}
-          <a class="nav-item nav-link" href="/courses-available">Cursos disponibles</a>
-          <a class="nav-item nav-link" href="/my-courses">Mis cursos</a>
-          {{/if}}
-          <a class="nav-item nav-link" href="/logout">Cerrar sesión</a>
-          <a class="nav-item nav-link disabled" href="/">Proximamente</a>
-        </div>
+        {{>menu}}
       </div>
     </nav>
 

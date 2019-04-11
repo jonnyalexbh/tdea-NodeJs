@@ -1,0 +1,11 @@
+[
+  {
+    "identity": "admin",
+    "name": "Admin",
+    "email": "admin@tdea.edu.co",
+    "phone": "3094911",
+    "course_id": "90",
+    "role": "admin",
+    "password": "root123"
+  }
+]

@@ -29,35 +29,24 @@ const logIn = async ({ user, pass }) => {
 const registerUser = async (data) => {
   const existsUser = await User.findOne({ identity: data.identity });
   console.log(existsUser);
-  if (existsUser) throw new Error('User already exists');
+  if (existsUser) throw new Error('La información ya existe en nuestro sistema');
   const user = new User({ ...data, password: data.identity });
   await user.save();
 };
 
 const courseById = async courseId => Course.findOne({ id: courseId });
 
-const registerCourse = async (data) => {
+const registerCourse = async ({ courseId, userId }) => {
   const response = {
     state: -1,
     courses: await getCoursesAvailable(),
   };
 
-  const registeredUser = {
-    identity: data.identity,
-    name: data.name,
-    email: data.email,
-    phone: data.phone,
-    password: data.identity,
-  };
+  const coursesPerson = { userId, courseId };
 
-  const coursesPerson = {
-    userId: data.identity,
-    courseId: data.courseId,
-  };
-
-  const user = await User.findOne({ identity: registeredUser.identity });
+  const user = await User.findOne({ identity: userId });
   const userInCourse = await CourseByUser
-    .findOne({ userId: coursesPerson.identity, courseId: coursesPerson.courseId });
+    .findOne({ userId: coursesPerson.userId, courseId: coursesPerson.courseId });
 
   if (user && userInCourse) {
     response.state = 0;
@@ -83,7 +72,7 @@ const readUsersInCourse = async ({ courseId }) => {
 };
 
 const closeCourse = async (data) => {
-  Course.findOneAndUpdate({ id: data.id }, { $set: { state: 'cerrado' } });
+  await Course.findOneAndUpdate({ id: data.id }, { $set: { state: 'cerrado' } });
   const courses = await loadCourses();
   return courses;
 };
@@ -106,13 +95,37 @@ const removeCourseById = async ({ courseId, userId }) => {
   return myCourses;
 };
 
+const listUsers = async () => User.find({});
+
+const findUser = async userId => User.findById(userId).lean();
+
+const updateUser = async (data) => {
+  const newData = Object.assign({}, data);
+  delete newData.id;
+  const result = await User.findByIdAndUpdate({ _id: data.id }, { $set: data });
+
+  if (!result) {
+    throw new Error('El usuario no existe');
+  }
+
+  return result;
+};
+
+const loadTeacherCourses = async (teacherId) => {
+  const courses = await Course.find({ teacherId });
+  return courses;
+};
+
 module.exports = {
   closeCourse,
   courseById,
   createCourse,
+  findUser,
   getCoursesAvailable,
   isAdmin,
+  listUsers,
   loadCourses,
+  loadTeacherCourses,
   logIn,
   readMyCourses,
   readUsersInCourse,
@@ -120,4 +133,5 @@ module.exports = {
   registerUser,
   removeCourseById,
   unsubscribeStudent,
+  updateUser,
 };

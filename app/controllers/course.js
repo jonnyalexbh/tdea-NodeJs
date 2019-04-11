@@ -10,8 +10,8 @@ const create = (req, res) => res.render('create-course', { req });
 
 const store = (req, res) => {
   Service.createCourse(req.body)
-    .then(() => {
-      res.render('courses', { courses: Service.loadCourses(), req, success: 'Curso registrado correctamente' });
+    .then(async () => {
+      res.render('courses', { courses: await Service.loadCourses(), req, success: 'Curso registrado correctamente' });
     })
     .catch((error) => {
       console.error('Error', error);
@@ -28,7 +28,10 @@ const show = (req, res, next) => {
 };
 
 const registryCourse = (req, res) => {
-  Service.registerCourse(req.body)
+  const { userId } = req.session;
+  const { courseId } = req.body;
+
+  Service.registerCourse({ courseId, userId })
     .then(({ state, courses }) => {
       switch (state) {
         case 0:
@@ -47,7 +50,7 @@ const registryCourse = (req, res) => {
 
 const coursesAvailable = (req, res, next) => {
   Service.getCoursesAvailable()
-    .then(courses => res.render('courses', { courses, req }))
+    .then(courses => res.render('courses-available', { courses, req }))
     .catch(error => next(error));
 };
 
@@ -60,7 +63,7 @@ const seeRegistered = (req, res, next) => {
 };
 
 const updateCourseStatus = (req, res, next) => {
-  Service.closeCourse()
+  Service.closeCourse({ id: req.body.courseId })
     .then((courses) => {
       res.render('courses', { courses, req });
     })
@@ -68,10 +71,10 @@ const updateCourseStatus = (req, res, next) => {
 };
 
 const removeFromCourse = (req, res, next) => {
-  const { courseId, userId } = req.params;
+  const { courseId, userId } = req.body;
   Service.unsubscribeStudent({ courseId, userId })
     .then((courses) => {
-      res.render('courses', { courses, req });
+      res.render('courses', { courses, req, success: 'Estudiante dado de baja exitósamente' });
     })
     .catch(error => next(error));
 };
@@ -83,9 +86,17 @@ const myCourses = (req, res, next) => {
 };
 
 const removeMyCourses = (req, res, next) => {
-  const { courseId, userId } = req.params;
+  const { courseId } = req.body;
+  const { userId } = req.session;
+
   Service.removeCourseById({ courseId, userId })
-    .then(courses => res.render('my-courses', { courses, req }))
+    .then(courses => res.render('my-courses', { courses, req, success: 'El usuario abandonó el curso' }))
+    .catch(error => next(error));
+};
+
+const teacherCourses = (req, res, next) => {
+  Service.loadTeacherCourses(req.session.userId)
+    .then(courses => res.render('teacher-courses', { courses, req }))
     .catch(error => next(error));
 };
 
@@ -101,4 +112,5 @@ module.exports = {
   removeFromCourse,
   myCourses,
   removeMyCourses,
+  teacherCourses,
 };

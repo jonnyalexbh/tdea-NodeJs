@@ -2,6 +2,7 @@ const express = require('express');
 
 const courseController = require('./controllers/course');
 const loginController = require('./controllers/login');
+const userController = require('./controllers/user');
 const registerController = require('./controllers/register');
 const authenticationMiddleware = require('./middlewares/authentication');
 
@@ -21,9 +22,13 @@ router.get('/', loginController.index)
   .post('/registry-course', courseController.registryCourse)
   .get('/courses-available', courseController.coursesAvailable)
   .get('/see-registered/:id', courseController.seeRegistered)
-  .get('/update-course-status/:id', courseController.updateCourseStatus)
-  .get('/remove-from-course/:courseId/:userId', courseController.removeFromCourse)
+  .post('/update-course-status', courseController.updateCourseStatus)
+  .post('/remove-from-course', courseController.removeFromCourse)
   .get('/my-courses', courseController.myCourses)
-  .get('/remove-my-courses/:courseId', courseController.removeMyCourses);
+  .post('/remove-my-courses', courseController.removeMyCourses)
+  .get('/users', userController.list)
+  .get('/edit-user/:userId', userController.editUser)
+  .post('/update-user', userController.updateUser)
+  .get('/teacher-courses', courseController.teacherCourses);
 
 module.exports = router;

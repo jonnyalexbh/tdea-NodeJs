@@ -10,20 +10,27 @@
         <th scope="col">Nombre</th>
         <th scope="col">Correo electrónico</th>
         <th scope="col">Telefono</th>
+        {{#unless (isSelectedRole "docente" req.session.userRole)}}
         <th scope="col">Acciones</th>
+        {{/unless}}
       </tr>
     </thead>
     {{#each people}}
     <tbody>
       <tr>
-        <td>{{this.identity}}</td>
-        <td>{{this.name}}</td>
-        <td>{{this.email}}</td>
-        <td>{{this.phone}}</td>
+        <td>{{identity}}</td>
+        <td>{{name}}</td>
+        <td>{{email}}</td>
+        <td>{{phone}}</td>
+        {{#unless (isSelectedRole "docente" @root.req.session.userRole)}}
         <td>
-          <a class="btn btn-link btn-sm" href="/remove-from-course/{{this.course_id}}/{{this.identity}}"
-            role="button">Eliminar del curso</a>
+          <form action="/remove-from-course" method="POST">
+            <input name="courseId" type="hidden" value="{{@root.course.id}}">
+            <input name="userId" type="hidden" value="{{identity}}">
+            <input type="submit" value="Eliminar del curso" class="btn btn-link">
+          </form>
         </td>
+        {{/unless}}
       </tr>
     </tbody>
     {{/each}}

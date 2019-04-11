@@ -3,6 +3,11 @@
   <div class="pb-4 d-flex justify-content-between">
     <h4>Gestionar mis cursos</h4>
   </div>
+  {{#if success}}
+  <div class="alert alert-success" role="alert">
+    {{{success}}}
+  </div>
+  {{/if}}
   <table class="table table-sm">
     <thead class="thead-dark">
       <tr>
@@ -26,7 +31,12 @@
         <td>{{this.modality}}</td>
         <td>{{this.workload}}</td>
         <td>{{this.state}}</td>
-        <td><a class="btn btn-link btn-sm" href="/remove-my-courses/{{this.id}}" role="button">Eliminar</a></td>
+        <td>
+          <form action="/remove-my-courses" method="POST">
+            <input name="courseId" type="hidden" value="{{this.id}}">
+            <input type="submit" value="Eliminar" class="btn btn-link">
+          </form>
+        </td>
       </tr>
     </tbody>
     {{/each}}

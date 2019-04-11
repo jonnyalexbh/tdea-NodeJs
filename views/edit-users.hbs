@@ -1,0 +1,47 @@
+{{>header}}
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-start">
+    <h4>Actualizar usuario</h4>
+  </div>
+  {{#if info}}
+  <div class="alert alert-info" role="alert">
+    {{info}}
+  </div>
+  {{/if}}
+  <form action="/update-user" method="POST">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="id">Identificación</label>
+        <input type="text" name="identity" required disabled class="form-control" value="{{identity}}">
+        <input type="hidden" name="id" value="{{_id}}">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="id">Nombre</label>
+        <input type="text" name="name" required class="form-control" value="{{name}}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="name">Correo</label>
+        <input type="text" name="email" required class="form-control" value="{{email}}">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="name">Teléfono</label>
+        <input type="text" name="phone" required class="form-control" value="{{phone}}">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="role">Rol</label>
+        <select name="role" class="form-control">
+          <option {{#if (isSelectedRole role "aspirante")}}selected{{/if}} value="aspirante">Aspirante</option>
+          <option {{#if (isSelectedRole role "docente")}}selected{{/if}} value="docente">Docente</option>
+        </select>
+      </div>
+    </div>
+    <div class="pb-4 d-flex justify-content-center">
+      <button type="submit" class="btn btn-dark">Guardar</button>
+    </div>
+  </form>
+</div>
+{{>footer}}

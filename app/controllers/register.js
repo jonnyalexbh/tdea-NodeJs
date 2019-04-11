@@ -1,8 +1,7 @@
 const Service = require('../service');
 
-exports.create = (req, res, next) => {
-  return next(new Error('this is fucked up'));
-  // res.render('register');
+exports.create = (req, res) => {
+  res.render('register');
 };
 
 exports.store = (req, res) => {
@@ -10,7 +9,7 @@ exports.store = (req, res) => {
     .then(() => {
       res.redirect('/');
     })
-    .catch(() => {
-      res.render('register', { message: 'La informacion ingresada ya existe en nuestra base de datos' });
+    .catch((error) => {
+      res.render('register', { message: error.message });
     });
 };
