@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const Course = require('./models/course');
 const CourseByUser = require('./models/coursexuser');
 const User = require('./models/user');
@@ -21,7 +22,8 @@ const createCourse = async (data) => {
 };
 
 const logIn = async ({ user, pass }) => {
-  const model = User.findOne({ identity: user, password: pass });
+  const hashedPassword = bcrypt.hash(pass, 10);
+  const model = User.findOne({ identity: user, password: hashedPassword });
   if (!model) throw new Error('User not found');
   return model;
 };
@@ -30,7 +32,9 @@ const registerUser = async (data) => {
   const existsUser = await User.findOne({ identity: data.identity });
   console.log(existsUser);
   if (existsUser) throw new Error('La información ya existe en nuestro sistema');
-  const user = new User({ ...data, password: data.identity });
+  const encryptedPassword = await bcrypt.hash(data.identity, 10);
+
+  const user = new User({ ...data, password: encryptedPassword });
   await user.save();
 };
 

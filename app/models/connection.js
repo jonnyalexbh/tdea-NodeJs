@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://10.0.0.136:27017', {
+mongoose.connect('mongodb://localhost:27017', {
   dbName: 'tdea_db',
   useNewUrlParser: true,
 });
