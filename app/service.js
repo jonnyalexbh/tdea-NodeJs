@@ -3,7 +3,19 @@ const Course = require('./models/course');
 const CourseByUser = require('./models/coursexuser');
 const User = require('./models/user');
 
-const loadCourses = async () => Course.find({});
+const loadCourses = async () => {
+  const courses = await Course.find({});
+
+  for (let i = 0; i < courses.length; i += 1) {
+    const { teacherId } = courses[i];
+    if (teacherId) {
+      courses[i].teacher = (await User.findOne({ identity: teacherId })).name;
+    } else {
+      courses[i].teacher = '- - -';
+    }
+  }
+  return courses;
+};
 
 const getCoursesAvailable = async () => Course.find({ state: 'disponible' });
 
@@ -22,15 +34,15 @@ const createCourse = async (data) => {
 };
 
 const logIn = async ({ user, pass }) => {
-  const hashedPassword = bcrypt.hash(pass, 10);
-  const model = User.findOne({ identity: user, password: hashedPassword });
+  const model = await User.findOne({ identity: user });
   if (!model) throw new Error('User not found');
+  const isSamePasswd = await bcrypt.compare(pass, model.password);
+  if (!isSamePasswd) throw new Error('Password is incorrect');
   return model;
 };
 
 const registerUser = async (data) => {
   const existsUser = await User.findOne({ identity: data.identity });
-  console.log(existsUser);
   if (existsUser) throw new Error('La información ya existe en nuestro sistema');
   const encryptedPassword = await bcrypt.hash(data.identity, 10);
 
@@ -120,13 +132,20 @@ const loadTeacherCourses = async (teacherId) => {
   return courses;
 };
 
+const listTeachers = async () => User.find({ role: 'docente' });
+
+const assignTeacher = async ({ courseId, teacherId }) => Course
+  .findOneAndUpdate({ id: courseId }, { $set: { teacherId } });
+
 module.exports = {
+  assignTeacher,
   closeCourse,
   courseById,
   createCourse,
   findUser,
   getCoursesAvailable,
   isAdmin,
+  listTeachers,
   listUsers,
   loadCourses,
   loadTeacherCourses,

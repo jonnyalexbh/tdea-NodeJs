@@ -29,6 +29,8 @@ router.get('/', loginController.index)
   .get('/users', userController.list)
   .get('/edit-user/:userId', userController.editUser)
   .post('/update-user', userController.updateUser)
-  .get('/teacher-courses', courseController.teacherCourses);
+  .get('/teacher-courses', courseController.teacherCourses)
+  .get('/see-teachers/:courseId', userController.teachers)
+  .post('/assign-teacher', courseController.assignTeacher);
 
 module.exports = router;

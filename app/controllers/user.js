@@ -24,8 +24,17 @@ const updateUser = (req, res, next) => {
     .catch(error => next(error));
 };
 
+const teachers = (req, res, next) => {
+  Service.listTeachers()
+    .then((teacherList) => {
+      res.render('list-teachers', { req, teachers: teacherList, courseId: req.params.courseId });
+    })
+    .catch(error => next(error));
+};
+
 module.exports = {
   editUser,
   list,
   updateUser,
+  teachers,
 };

@@ -19,7 +19,8 @@
         <th scope="col">Modalidad</th>
         <th scope="col">Intensidad Horaria</th>
         <th scope="col">Estado</th>
-        <th colspan="2" scope="col">Acciones</th>
+        <th scope="col">Profesor</th>
+        <th colspan="3" scope="col">Acciones</th>
       </tr>
     </thead>
     {{#each courses}}
@@ -32,6 +33,7 @@
         <td>{{modality}}</td>
         <td>{{workload}}</td>
         <td>{{state}}</td>
+        <td>{{teacher}}</td>
         <td>
           <form action="/update-course-status" method="POST">
             <input name="courseId" type="hidden" value="{{id}}">
@@ -40,6 +42,7 @@
         </td>
         </td>
         <td><a class="btn btn-link btn-sm" href="/see-registered/{{this.id}}" role="button">Ver inscritos</a></td>
+        <td><a class="btn btn-link btn-sm" href="/see-teachers/{{id}}">Asignar profesor</a></td>
       </tr>
     </tbody>
     {{/each}}

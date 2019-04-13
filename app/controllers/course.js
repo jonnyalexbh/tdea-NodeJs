@@ -100,7 +100,14 @@ const teacherCourses = (req, res, next) => {
     .catch(error => next(error));
 };
 
+const assignTeacher = async (req, res, next) => {
+  Service.assignTeacher(req.body)
+    .then(() => res.redirect('courses'))
+    .catch(error => next(error));
+};
+
 module.exports = {
+  assignTeacher,
   index,
   create,
   store,

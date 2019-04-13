@@ -1,0 +1,46 @@
+{{>header}}
+
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-between">
+    <h4>Gestión de usuarios</h4>
+  </div>
+
+  {{#if success}}
+  <div class="alert alert-success" role="alert">
+    {{success}}
+  </div>
+  {{/if}}
+
+  <table class="table table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Correo</th>
+        <th scope="col">Teléfono</th>
+        <th scope="col">Rol</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    {{#each teachers}}
+    <tbody>
+      <tr>
+        <td>{{identity}}</td>
+        <td>{{name}}</td>
+        <td>{{email}}</td>
+        <td>{{phone}}</td>
+        <td>{{role}}</td>
+        <td>
+          <form action="/assign-teacher" method="POST">
+          <input name="courseId" type="hidden" value="{{@root.courseId}}">
+          <input name="teacherId" type="hidden" value="{{identity}}">
+          <input type="submit" value="Asignar" class="btn btn-link">
+          </form>
+        </td>
+      </tr>
+    </tbody>
+    {{/each}}
+  </table>
+</div>
+
+{{>footer}}

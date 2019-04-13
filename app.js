@@ -38,7 +38,9 @@ app.set('view engine', 'hbs');
 // routes
 app.use('/', routes);
 app.use((err, req, res, next) => {
-  res.render('error');
+  res.render('error', {
+    message: err.message,
+  });
 });
 
 app.listen(port, () => {
