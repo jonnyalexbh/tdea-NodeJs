@@ -1,11 +1,22 @@
-const express = require('express');
-const path = require('path');
-const hbs = require('hbs');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+const express = require('express');
+const hbs = require('hbs');
+const path = require('path');
 const session = require('express-session');
+
 const MongoStore = require('connect-mongo')(session);
 
 const port = process.env.PORT || 3000;
+
+if (process.env.NODE_ENV !== 'production') {
+  console.log('Gonna set env-vars for development');
+
+  dotenv.config({
+    debug: true,
+    path: path.join(__dirname, './.env.dev'),
+  });
+}
 
 require('./app/helpers');
 require('./seeder');

@@ -1,8 +1,15 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017', {
-  dbName: 'tdea_db',
+const {
+  DB_URL,
+  DB_USER,
+  DB_USER_PASSWORD,
+} = process.env;
+
+mongoose.connect(DB_URL, {
   useNewUrlParser: true,
+  user: DB_USER,
+  pass: DB_USER_PASSWORD,
 });
 
 const { connection } = mongoose;
