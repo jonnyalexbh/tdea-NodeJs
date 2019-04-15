@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const express = require('express');
+const fs = require('fs');
 const hbs = require('hbs');
 const path = require('path');
 const session = require('express-session');
@@ -12,9 +13,16 @@ const port = process.env.PORT || 3000;
 if (process.env.NODE_ENV !== 'production') {
   console.log('Gonna set env-vars for development');
 
+  const environmentFile = path.join(__dirname, './.env.dev');
+
+  if (!fs.existsSync(environmentFile)) {
+    console.error('You must create a file named .env.dev in order to run the project');
+    process.exit();
+  }
+
   dotenv.config({
     debug: true,
-    path: path.join(__dirname, './.env.dev'),
+    path: environmentFile,
   });
 }
 
