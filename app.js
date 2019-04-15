@@ -56,6 +56,8 @@ app.set('view engine', 'hbs');
 
 // routes
 app.use('/', routes);
+
+// eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   res.render('error', {
     message: err.message,

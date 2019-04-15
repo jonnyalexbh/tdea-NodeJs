@@ -8,7 +8,7 @@ const usersSeeders = async () => {
 
   if (!userCount) {
     console.log('Gonna insert admin user');
-    defaultUsers.forEach(user => {
+    defaultUsers.forEach((user) => {
       Service.registerUser(user);
     });
     console.log('Admin user created');

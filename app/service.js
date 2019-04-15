@@ -1,3 +1,5 @@
+/* eslint-disable no-await-in-loop */
+
 const bcrypt = require('bcrypt');
 const Course = require('./models/course');
 const CourseByUser = require('./models/coursexuser');
