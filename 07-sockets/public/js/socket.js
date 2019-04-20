@@ -12,11 +12,22 @@ socket.on('counter', (counter) => {
   console.log(counter);
 });
 
-document.querySelector('#frmtest').addEventListener('submit', (data) => {
+const formTest = document.querySelector('#frmtest')
+const message = formTest.querySelector('#texttosend')
+const chat = document.querySelector('#chat')
+
+formTest.addEventListener('submit', (data) => {
   data.preventDefault()
   const name = data.target.elements.name.value;
   const text = data.target.elements.texttosend.value;
-  socket.emit('texto', { message: text, name: name });
+  socket.emit('texto', {
+    message: text,
+    name: name
+  }, () => {
+    chat.innerHTML = chat.innerHTML + message.value + '<br>';
+    message.value = '';
+    message.focus();
+  });
 });
 
 socket.on('texto', (text) => {

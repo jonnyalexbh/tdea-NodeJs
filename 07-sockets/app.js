@@ -28,9 +28,10 @@ io.on('connection', client => {
     io.emit('counter', counter);
   });
 
-  client.on('texto', (txt) => {
+  client.on('texto', (txt, callback) => {
     console.log(txt);
     io.emit('texto', txt);
+    callback();
   });
 
 });
