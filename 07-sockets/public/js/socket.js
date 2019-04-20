@@ -24,7 +24,6 @@ formTest.addEventListener('submit', (data) => {
     message: text,
     name: name
   }, () => {
-    chat.innerHTML = chat.innerHTML + message.value + '<br>';
     message.value = '';
     message.focus();
   });
@@ -32,4 +31,5 @@ formTest.addEventListener('submit', (data) => {
 
 socket.on('texto', (text) => {
   console.log(text);
+  chat.innerHTML = chat.innerHTML + text.name + ':' + text.message + '<br>';
 });
