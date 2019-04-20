@@ -1,4 +1,8 @@
 const express = require('express');
+const multer = require('multer');
+
+// multer
+const upload = multer({ dest: 'uploads/' })
 
 const router = express.Router();
 const loginController = require('./controllers/loginController');
@@ -21,7 +25,7 @@ router.get('/remove-from-course/:course_id/:student_id', courseController.remove
 
 router.get('/notes', studentController.index);
 router.get('/create-notes', studentController.create);
-router.post('/store-notes', studentController.store);
+router.post('/store-notes', upload.single('photo'), studentController.store);
 router.get('/edit-notes/:id', studentController.edit);
 router.post('/update-notes', studentController.update);
 router.get('/remove-notes/:id', studentController.destroy);

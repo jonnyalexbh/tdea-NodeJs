@@ -6,7 +6,7 @@ const path = require('path');
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const session = require('express-session')
+const session = require('express-session');
 
 const routes = require('./app/routes');
 
