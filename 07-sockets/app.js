@@ -11,6 +11,8 @@ require('./app/config');
 const publicDirectory = path.join(__dirname, 'public');
 app.use(express.static(publicDirectory));
 
+counter = 0
+
 io.on('connection', client => {
   console.log('a user has connected');
 
@@ -19,6 +21,14 @@ io.on('connection', client => {
   client.on('message', (information) => {
     console.log(information);
   })
+
+  client.on('counter', () => {
+    counter++;
+    console.log(counter);
+    io.emit('counter', counter);
+  });
+
+
 
 });
 
