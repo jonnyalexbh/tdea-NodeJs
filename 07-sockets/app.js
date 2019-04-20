@@ -11,22 +11,31 @@ require('./app/config');
 const publicDirectory = path.join(__dirname, 'public');
 app.use(express.static(publicDirectory));
 
-counter = 0
+// counter = 0
+const { Users } = require('./app/users');
+const users = new Users();
 
 io.on('connection', client => {
   console.log('a user has connected');
 
-  client.emit('message', 'welcome to my page');
+  // client.emit('message', 'welcome to my page');
 
-  client.on('message', (information) => {
-    console.log(information);
+  // client.on('message', (information) => {
+  //   console.log(information);
+  // })
+
+  // client.on('counter', () => {
+  //   counter++;
+  //   console.log(counter);
+  //   io.emit('counter', counter);
+  // });
+
+  client.on('userNew', (user) => {
+    let list = users.addUser(client.id, user)
+    console.log(list)
+    let texto = `Se ha conectado ${user}`
+    io.emit('userNew', texto)
   })
-
-  client.on('counter', () => {
-    counter++;
-    console.log(counter);
-    io.emit('counter', counter);
-  });
 
   client.on('texto', (txt, callback) => {
     console.log(txt);
