@@ -43,11 +43,13 @@ io.on('connection', client => {
     io.emit('userOffline', texto)
   })
 
-  client.on('texto', (txt, callback) => {
-    console.log(txt);
-    io.emit('texto', txt);
-    callback();
-  });
+  client.on('texto', (text, callback) => {
+    let user = users.getUser(client.id)
+    let texto = `${user.name} : ${text}`
+
+    io.emit('texto', (texto))
+    callback()
+  })
 
 });
 

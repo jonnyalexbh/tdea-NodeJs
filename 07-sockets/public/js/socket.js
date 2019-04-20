@@ -36,12 +36,7 @@ const chat = document.querySelector('#chat')
 
 formTest.addEventListener('submit', (data) => {
   data.preventDefault()
-  const name = data.target.elements.name.value;
-  const text = data.target.elements.texttosend.value;
-  socket.emit('texto', {
-    message: text,
-    name: name
-  }, () => {
+  socket.emit('texto', message.value, () => {
     message.value = '';
     message.focus();
   });
@@ -49,5 +44,5 @@ formTest.addEventListener('submit', (data) => {
 
 socket.on('texto', (text) => {
   console.log(text);
-  chat.innerHTML = chat.innerHTML + text.name + ':' + text.message + '<br>';
+  chat.innerHTML = chat.innerHTML + text + '<br>';
 });
