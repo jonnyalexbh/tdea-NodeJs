@@ -1,0 +1,38 @@
+{
+  "name": "second-delivery",
+  "version": "1.0.0",
+  "description": "second delivery tdea",
+  "main": "app.js",
+  "scripts": {
+    "start:dev": "nodemon -e js,hbs,json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonnyalexbh/tdea-NodeJs.git"
+  },
+  "author": "jonnyalexbh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonnyalexbh/tdea-NodeJs/issues"
+  },
+  "homepage": "https://github.com/jonnyalexbh/tdea-NodeJs#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.5",
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.3.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "hbs": "^4.0.3",
+    "jquery": "^3.3.1",
+    "mongoose": "^5.4.21",
+    "mongoose-unique-validator": "^2.0.2",
+    "popper.js": "^1.14.7"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "1.18.10"
+  }
+}

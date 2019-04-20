@@ -1,0 +1,32 @@
+{{>header}}
+<div class="container-fluid">
+  <div class="pb-4 d-flex justify-content-start">
+    <h4>Inscritos al curso {{course.name}}</h4>
+  </div>
+  <table class="table table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Identificación</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Correo electrónico</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    {{#each people}}
+    <tbody>
+      <tr>
+        <td>{{this.identity}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.email}}</td>
+        <td>{{this.phone}}</td>
+        <td>
+          <a class="btn btn-link btn-sm" href="/remove-from-course/{{this.course_id}}/{{this.identity}}"
+            role="button">Eliminar del curso</a>
+        </td>
+      </tr>
+    </tbody>
+    {{/each}}
+  </table>
+</div>
+{{>footer}}
