@@ -28,8 +28,9 @@ exports.authenticated = (req, res) => {
 
     req.session.user_id = result._id;
     req.session.name = result.name;
+    avatar = result.avatar.toString('base64');
 
-    return res.render('main', { req });
+    return res.render('main', { req, avatar});
   })
 };
 

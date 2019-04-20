@@ -33,6 +33,7 @@ const store = (req, res) => {
     math: req.body.math,
     english: req.body.english,
     programming: req.body.programming,
+    avatar: req.file.buffer,
   });
 
   student.save((error, result) => {
