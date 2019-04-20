@@ -9,14 +9,17 @@
 </head>
 
 <body>
-  <h1>Ingresar al chat</h1>
+  <h1>Sala de chat</h1>
 
-  <form action="" id="frmtest" action="chat.html">
-    <input type="text" id="name" placeholder="nombre de usuario">
-    <button>Enviar</button>
+  <form action="" id="frmtest">
+    <input type="text" id="name">
+    <input type="text" id="texttosend">
+    <button>send</button>
   </form>
 
-  <div id="chat"> </div>
+  <div id="chat">
+
+  </div>
 
   <script src="socket.io/socket.io.js"></script>
   <script src="js/socket.js"></script>
