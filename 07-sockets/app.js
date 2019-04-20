@@ -37,6 +37,12 @@ io.on('connection', client => {
     io.emit('userNew', texto)
   })
 
+  client.on('disconnect', () => {
+    let userToRemove = users.removeUser(client.id)
+    let texto = `Se ha desconectado ${userToRemove.name}`
+    io.emit('userOffline', texto)
+  })
+
   client.on('texto', (txt, callback) => {
     console.log(txt);
     io.emit('texto', txt);

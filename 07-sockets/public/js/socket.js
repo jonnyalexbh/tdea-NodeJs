@@ -25,6 +25,11 @@ socket.on('userNew', (texto) => {
   chat.innerHTML = chat.innerHTML + texto + '<br>'
 })
 
+socket.on('userOffline', (texto) => {
+  console.log(texto)
+  chat.innerHTML = chat.innerHTML + texto + '<br>'
+})
+
 const formTest = document.querySelector('#frmtest')
 const message = formTest.querySelector('#texttosend')
 const chat = document.querySelector('#chat')
