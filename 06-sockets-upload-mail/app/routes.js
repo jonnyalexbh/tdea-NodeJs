@@ -2,7 +2,18 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 
-const upload = multer({})
+const upload = multer({
+  limits: {
+    fileSize: 1000000
+  },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|png|jpeg)$/)) {
+      return cb(new Error('it is not a valid file'))
+    }
+    // To accept the file pass true, like so:
+    cb(null, true)
+  }
+})
 
 const router = express.Router();
 const loginController = require('./controllers/loginController');
