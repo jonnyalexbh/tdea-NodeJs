@@ -13,6 +13,13 @@ app.use(express.static(publicDirectory));
 
 io.on('connection', client => {
   console.log('a user has connected');
+
+  client.emit('message', 'welcome to my page');
+
+  client.on('message', (information) => {
+    console.log(information);
+  })
+
 });
 
 // Invoke the app's `.listen()` method below:
