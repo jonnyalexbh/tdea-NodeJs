@@ -34,10 +34,13 @@ const routes = require('./app/routes');
 
 // static files
 const publicDirectory = path.join(__dirname, './public');
+const picturesFolder = path.join(__dirname, './public/files');
 const partialsDirectory = path.join(__dirname, './partials');
+
 hbs.registerPartials(partialsDirectory);
 
 const app = express();
+app.use(express.static(picturesFolder));
 app.use(express.static(publicDirectory));
 app.use(bodyParser.urlencoded({ extended: false }));
 

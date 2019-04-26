@@ -10,6 +10,8 @@ exports.store = (req, res) => {
       res.redirect('/');
     })
     .catch((error) => {
+      console.log(error);
+
       res.render('register', { message: error.message });
     });
 };

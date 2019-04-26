@@ -2,3 +2,5 @@ node_modules/
 
 # Environment vars
 .env.*
+
+public/files
