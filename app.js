@@ -5,6 +5,7 @@ const fs = require('fs');
 const hbs = require('hbs');
 const path = require('path');
 const session = require('express-session');
+const io = require('socket.io');
 
 const MongoStore = require('connect-mongo')(session);
 
@@ -40,6 +41,7 @@ const partialsDirectory = path.join(__dirname, './partials');
 hbs.registerPartials(partialsDirectory);
 
 const app = express();
+
 app.use(express.static(picturesFolder));
 app.use(express.static(publicDirectory));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -67,6 +69,12 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(port, () => {
+const httpServer = app.listen(port, () => {
   console.log(`Escuchando por el puerto ${port}`);
+});
+
+const socketServer = io(httpServer);
+
+socketServer.on('connection', (socket) => {
+  console.log(`New socket connected with id ${socket.id}`);
 });
