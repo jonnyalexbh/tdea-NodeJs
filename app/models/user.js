@@ -34,6 +34,11 @@ const User = new Schema({
     required: true,
     minlength: 3,
   },
+  online: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
 });
 
 module.exports = connection.model('User', User);

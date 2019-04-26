@@ -27,6 +27,9 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
+const createSocketHelper = require('./app/helpers/socket');
+const UserHelper = require('./app/helpers/users');
+
 require('./app/helpers');
 require('./seeder');
 
@@ -74,7 +77,44 @@ const httpServer = app.listen(port, () => {
 });
 
 const socketServer = io(httpServer);
+app.locals.SocketHelper = createSocketHelper(socketServer);
+
+socketServer.use((socket, next) => {
+  const { handshake: { query } } = socket;
+
+  if (!query.userId) {
+    console.log('No se envio el id de usuario');
+    return next('user_not_send');
+  }
+
+  // eslint-disable-next-line no-param-reassign
+  socket.userId = query.userId;
+
+  console.log('El usuario se va a conectar al servidor de sockets');
+  return next();
+});
 
 socketServer.on('connection', (socket) => {
-  console.log(`New socket connected with id ${socket.id}`);
+  console.log(`New socket connected with id ${socket.id} ${socket.userId}`);
+  socket.join(socket.userId);
+
+  // Set user as online
+  UserHelper
+    .updateOnlineStatus(socket.userId, true)
+    .then()
+    .catch();
+
+  socketServer.emit('user_connected', { userId: socket.userId });
+
+  socket.on('disconnect', () => {
+    console.log(socket.userId);
+
+    // Set user as offline;
+    UserHelper
+      .updateOnlineStatus(socket.userId, false)
+      .then()
+      .catch();
+
+    socketServer.emit('user_disconected', { userId: socket.userId });
+  });
 });

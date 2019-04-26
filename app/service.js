@@ -37,7 +37,9 @@ const createCourse = async (data) => {
   const course = await Course.findOne({ id: data.id });
   if (course) throw new Error('Course already exists');
   const newCourse = new Course(data);
-  await newCourse.save();
+
+  // eslint-disable-next-line no-return-await
+  return await newCourse.save();
 };
 
 const logIn = async ({ user, pass }) => {

@@ -10,7 +10,8 @@ const create = (req, res) => res.render('create-course', { req });
 
 const store = (req, res) => {
   Service.createCourse(req.body)
-    .then(async () => {
+    .then(async (course) => {
+      res.app.locals.SocketHelper.sendBroadcastMessage({ event: 'new_course', data: course });
       res.render('courses', { courses: await Service.loadCourses(), req, success: 'Curso registrado correctamente' });
     })
     .catch((error) => {
@@ -65,6 +66,11 @@ const seeRegistered = (req, res, next) => {
 const updateCourseStatus = (req, res, next) => {
   Service.closeCourse({ id: req.body.courseId })
     .then((courses) => {
+      res.app.locals.SocketHelper.sendBroadcastMessage({
+        event: 'course_update',
+        data: courses.find(({ id }) => id === parseInt(req.body.courseId, 10)),
+      });
+
       res.render('courses', { courses, req });
     })
     .catch(error => next(error));
@@ -74,6 +80,11 @@ const removeFromCourse = (req, res, next) => {
   const { courseId, userId } = req.body;
   Service.unsubscribeStudent({ courseId, userId })
     .then((courses) => {
+      res.app.locals.SocketHelper.sendToSocket(userId, {
+        event: 'user_not_admited',
+        data: courses.find(({ id }) => id === parseInt(courseId, 10)),
+      });
+
       res.render('courses', { courses, req, success: 'Estudiante dado de baja exitósamente' });
     })
     .catch(error => next(error));
