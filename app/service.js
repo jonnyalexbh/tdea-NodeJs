@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
 
+const EmailHelper = require('./helpers/mail');
+
 const Course = require('./models/course');
 const CourseByUser = require('./models/coursexuser');
 const User = require('./models/user');
@@ -49,12 +51,22 @@ const logIn = async ({ user, pass }) => {
 const registerUser = async (data) => {
   const existsUser = await User.findOne({ identity: data.identity });
   if (existsUser) throw new Error('La información ya existe en nuestro sistema');
-  console.log(data);
 
   const encryptedPassword = await bcrypt.hash(data.identity, 10);
 
   const user = new User({ ...data, password: encryptedPassword });
-  await user.save();
+  const created = await user.save();
+
+  if (created) {
+    EmailHelper
+      .send(user.email, {
+        name: user.name,
+      })
+      .then()
+      .catch();
+  }
+
+  return created;
 };
 
 const courseById = async courseId => Course.findOne({ id: courseId });
