@@ -1,12 +1,14 @@
 socket = io('http://localhost:3000?userId=1');
 
 // eslint-disable-next-line no-undef
-const info = document.querySelector('#newCourse');
+const newCourse = document.querySelector('#newCourse');
+// eslint-disable-next-line no-undef
+const closeCourse = document.querySelector('#closeCourse');
 
 socket.on('new_course', (data) => {
-  info.innerHTML = `Disponible nuevo curso de ${data.name}<br>`;
+  newCourse.innerHTML = `Disponible nuevo curso de ${data.name}`;
 });
 
-socket.on('user_not_admited', () => {
-  console.log('dos');
+socket.on('course_update', (data) => {
+  closeCourse.innerHTML = `Curso cerrado ${data.name}`;
 });
